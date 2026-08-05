@@ -1,357 +1,104 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ОТВЕТка</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ОТВЕТка</title>
+    <style>
+        :root {
+            --primary-color: #2e7d32; /* Основной зеленый */
+            --primary-hover: #1b5e20; /* Темно-зеленый при наведении */
+            --bg-color: #f4f6f4;      /* Светлый фон */
+            --text-color: #333333;    /* Цвет текста */
+        }
 
-    :root {
-      --accent: #000000;
-      --accent-2: #00ff11;
-      --radius: 12px;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    body {
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: #0f172a;
-      background: #ffffff;
-    }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-    .page {
-      overflow: hidden;
-    }
+        /* Центрированный контейнер для главного экрана */
+        .welcome-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
 
-    .hero {
-      min-height: 520px;
-      padding: 80px 70px;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 40px;
-      align-items: center;
-      background:
-        radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.22), transparent 35%),
-        linear-gradient(135deg, #f8fafc, #eef2ff);
-    }
+        header h1 {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
 
-    .hero h1 {
-      font-size: clamp(38px, 5vw, 72px);
-      line-height: 0.95;
-      letter-spacing: -0.06em;
-      margin-bottom: 22px;
-    }
+        header p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2.5rem;
+        }
 
-    .hero p {
-      font-size: 19px;
-      color: #475569;
-      line-height: 1.65;
-      max-width: 620px;
-      margin-bottom: 28px;
-    }
+        /* Главная кнопка перехода */
+        .main-btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            padding: 18px 36px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            border-radius: 50px; /* Округлая форма */
+            box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+            transition: all 0.3s ease;
+        }
 
-    .hero-buttons {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
+        .main-btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px); /* Эффект приподнимания */
+            box-shadow: 0 6px 20px rgba(27, 94, 32, 0.4);
+        }
 
-    .site-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 14px 20px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 700;
-      color: #fff;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: 0 18px 35px rgba(124, 58, 237, 0.25);
-      border: none;
-    }
+        .main-btn:active {
+            transform: translateY(0);
+        }
 
-    .site-btn.secondary {
-      color: #0f172a;
-      background: #fff;
-      border: 1px solid #e2e8f0;
-      box-shadow: none;
-    }
-
-    .hero-card {
-      min-height: 340px;
-      border-radius: var(--radius);
-      background:
-        linear-gradient(145deg, rgba(255,255,255,0.84), rgba(255,255,255,0.38)),
-        url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80");
-      background-size: cover;
-      background-position: center;
-      box-shadow: 0 30px 70px rgba(15, 23, 42, 0.18);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .floating-card {
-      position: absolute;
-      left: 24px;
-      bottom: 24px;
-      right: 24px;
-      padding: 22px;
-      border-radius: 22px;
-      color: #fff;
-      background: rgba(15, 23, 42, 0.78);
-      backdrop-filter: blur(16px);
-    }
-
-    .features,
-    .gallery,
-    .pricing,
-    .contact {
-      padding: 76px 70px;
-    }
-
-    .features,
-    .pricing {
-      background: #fff;
-    }
-
-    .gallery {
-      background: #f8fafc;
-    }
-
-    .section-heading {
-      max-width: 720px;
-      margin-bottom: 34px;
-    }
-
-    .section-heading h2 {
-      font-size: clamp(30px, 4vw, 48px);
-      letter-spacing: -0.04em;
-      margin-bottom: 12px;
-    }
-
-    .section-heading p {
-      color: #64748b;
-      font-size: 18px;
-      line-height: 1.6;
-    }
-
-    .feature-grid,
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .feature-card,
-    .price-card {
-      padding: 26px;
-      border-radius: var(--radius);
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-    }
-
-    .icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      margin-bottom: 18px;
-    }
-
-    .feature-card h3 {
-      font-size: 21px;
-      margin-bottom: 10px;
-    }
-
-    .feature-card p,
-    .price-card p,
-    .price-card li {
-      color: #64748b;
-      line-height: 1.6;
-    }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 18px;
-    }
-
-    .gallery-img {
-      min-height: 260px;
-      border-radius: var(--radius);
-      background-size: cover;
-      background-position: center;
-      overflow: hidden;
-    }
-
-    .gallery-img.big {
-      min-height: 540px;
-      background-image: url("https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=80");
-    }
-
-    .gallery-stack {
-      display: grid;
-      gap: 18px;
-    }
-
-    .gallery-img.one {
-      background-image: url("https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=900&q=80");
-    }
-
-    .gallery-img.two {
-      background-image: url("https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=900&q=80");
-    }
-
-    .price-card.featured {
-      background: #0f172a;
-      color: #fff;
-      transform: translateY(-10px);
-      box-shadow: 0 28px 60px rgba(15, 23, 42, 0.22);
-    }
-
-    .price {
-      font-size: 42px;
-      font-weight: 900;
-      margin: 16px 0;
-      letter-spacing: -0.04em;
-    }
-
-    .price-card ul {
-      list-style: none;
-      margin: 20px 0;
-    }
-
-    .price-card li::before {
-      content: "✓ ";
-      color: #06b6d4;
-      font-weight: 900;
-    }
-
-    .price-card.featured p,
-    .price-card.featured li {
-      color: #cbd5e1;
-    }
-
-    .contact {
-      background:
-        radial-gradient(circle at top right, rgba(6, 182, 212, 0.25), transparent 32%),
-        linear-gradient(135deg, #0f172a, #1e1b4b);
-      color: #fff;
-    }
-
-    .contact-box {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 32px;
-      align-items: center;
-    }
-
-    .contact h2 {
-      font-size: clamp(34px, 5vw, 58px);
-      letter-spacing: -0.05em;
-      margin-bottom: 14px;
-    }
-
-    .contact p {
-      color: #cbd5e1;
-      font-size: 18px;
-      line-height: 1.7;
-    }
-
-    .form {
-      padding: 26px;
-      border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255,255,255,0.16);
-      backdrop-filter: blur(16px);
-    }
-
-    .form input,
-    .form textarea {
-      width: 100%;
-      padding: 14px 16px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      margin-bottom: 12px;
-      outline: none;
-    }
-
-    .form textarea {
-      min-height: 110px;
-      resize: vertical;
-    }
-
-    .form input::placeholder,
-    .form textarea::placeholder {
-      color: #cbd5e1;
-    }
-
-    .footer {
-      padding: 34px 70px;
-      background: #020617;
-      color: #94a3b8;
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    @media (max-width: 760px) {
-      .hero,
-      .contact-box {
-        grid-template-columns: 1fr;
-      }
-
-      .hero,
-      .features,
-      .gallery,
-      .pricing,
-      .contact,
-      .footer {
-        padding: 42px 24px;
-      }
-
-      .feature-grid,
-      .pricing-grid,
-      .gallery-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .gallery-img.big {
-        min-height: 320px;
-      }
-    }
-  </style>
+        footer {
+            background-color: #222;
+            color: #ccc;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
-  <main class="page">
-    
-          
-        
-        <section class="site-section hero" style="background: rgb(255, 255, 255); color: rgb(0, 0, 0);">
-          
-          <div>
+
+    <div class="welcome-container">
+        <header>
             <h1>ОТВЕТка</h1>
-            <p>Все новости о Подмосковье<div>Новое Вельяминово, Парижская комунна и т.д</div></p>
-            <div class="hero-buttons">
-              <a href="new.html" class="site-btn">Смотреть новости</a>
-              <a href="#" class="site-btn secondary">О нас</a>
-            </div>
-          </div>
-          <div class="hero-card" style="border-radius: 12px;">
-            <div class="floating-card">
-              <h3>ОТВЕТка</h3>
-              <p><br></p>
-            </div>
-          </div>
-        </section>
-      
-  </main>
+            <p>Новости про Подмосковье</p>
+        </header>
+
+        <!-- Единственная кнопка перехода на страницу новостей -->
+        <a href="new.html" class="main-btn">Смотреть новости</a>
+        <a href="https://beta-otvetka.vercel.app/" class="main-btn">Бета версия сайта</a>
+    </div>
+
+    <footer>
+        <p>&copy; ОТВЕТка</p>
+    </footer>
+
 </body>
 </html>
