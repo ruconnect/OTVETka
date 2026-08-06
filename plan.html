@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>otvetka.ru</title>
+    <title>Загрузка</title>
 
     <style>
         body {
@@ -44,7 +44,7 @@
         #timer {
             margin-top: 30px;
             font-size: 24px;
-            color: #333;
+            color: #59ff00;
         }
 
         .progress-container {
@@ -69,18 +69,18 @@
 <body>
 
     <header>
-        otvetka.ru
+        Новости
     </header>
 
     <main>
-        <button id="startButton">Нажать</button>
+        <button id="startButton">Перейти к новостям</button>
 
         <div class="progress-container" id="progressContainer">
             <div class="progress-bar" id="progressBar"></div>
         </div>
 
         <div id="timer">
-            Нажмите кнопку, чтобы начать
+            Нажмите кнопу для загрузки новостей
         </div>
     </main>
 
@@ -109,7 +109,7 @@
                 if (secondsLeft <= 0) {
                     clearInterval(timer);
                     progressBar.style.width = "100%";
-                    timerText.textContent = "Переход на страницу...";
+                    timerText.textContent = "Страница";
 
                     window.location.href = "new.html";
                 }
