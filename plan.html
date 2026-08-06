@@ -85,14 +85,17 @@
     </main>
 
     <script>
+        function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
         const button = document.getElementById("startButton");
         const timerText = document.getElementById("timer");
         const progressContainer = document.getElementById("progressContainer");
         const progressBar = document.getElementById("progressBar");
 
         button.addEventListener("click", function() {
-            let secondsLeft = 8;
-            const totalSeconds = 8;
+            let secondsLeft = getRandomInt(8,28);
+            const totalSeconds = getRandomInt(8,28);
 
             button.disabled = true;
             progressContainer.style.display = "block";
