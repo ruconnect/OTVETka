@@ -124,6 +124,7 @@
 
     <div class="container">
         <div class="news-grid">
+            <!-- Новости начало -->
             <article class="news-card">
                 <div class="news-image-container">
                     <!-- Замените url на адрес вашей картинки -->
@@ -133,13 +134,13 @@
                     <div>
                         <h3 class="news-title">Вентелятор</h3>
                         <p>
-                            Вентелятор для дома
-                            <button type="button href="https://www.ozon.ru/product/weissgauff-napolnyy-ventilyator-kolonnyy-s-vodyanym-ohlazhdeniem-wfc-90-b-water-ice-blue-light-4016217454/?at=QktJQYn1Gc5VLPmPIMv7xxGi1DgxJkivk8lGWUyzrQvG&sh=3CQ1Gug7tQ" ">Заказать</button>
+                            <a href="https://www.ozon.ru/product/weissgauff-napolnyy-ventilyator-kolonnyy-s-vodyanym-ohlazhdeniem-wfc-90-b-water-ice-blue-light-4016217454/?at=28t0Yg1v3Cpw810zcG1ZjL9iw1m5EVTrDJv1xT5XLGN3&sh=3CQ1GigR7g" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 5px 10px; background-color: #005bff; color: white; text-decoration: none; border-radius: 4px; margin-left: 10px;">Заказать</a>
                         </p>
                     </div>
                     <div class="news-date">Опубликовано: 6 августа</div>
                 </div>
             </article>
+            <!-- Новости конец -->
             <article class="news-card">
                 <div class="news-image-container">
                     <!-- Замените url на адрес вашей картинки -->
@@ -199,5 +200,9 @@
     </div>
 
 </body>
+<script>
+  // Этот код меняет путь в адресной строке без перезагрузки страницы
+  window.history.pushState({}, '', '/plan');
+</script>
 </html>
 
