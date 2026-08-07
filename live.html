@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новое Вельяминово live</title>
+    <style>
+        /* Обнуляем отступы и растягиваем страницу на весь экран */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f2f5;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Зелёный квадрат по центру */
+        .green-box {
+            width: 500px;
+            height: 500px;
+            background-color: #2ed573;
+            box-sizing: border-box;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        /* Контейнер для видео */
+        .video-container {
+            flex: 1;
+            height: auto;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+            display: block;
+        }
+
+        /* Контейнер для текста */
+        .text-container {
+            flex: 1;
+            color: #ffffff;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="green-box">
+        <!-- Блок с видео -->
+        <div class="video-container">
+            <video controls muted autoplay loop>
+                <source src="video/0.mp4" type="video/mp4">
+                Ваш браузер не поддерживает видео.
+            </video>
+        </div>
+
+        <!-- Блок с текстом -->
+        <div class="text-container">
+            <h3>7 августа: Новое Вельяминово</h3>
+            <p>Скоро будет осень. Надо готовить растения к зиме</p>
+        </div>
+    </div>
+
+</body>
+<script>
+    window.history.pushState({}, '', '/plan');
+</script>
+</html>
