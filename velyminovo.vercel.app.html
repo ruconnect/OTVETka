@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<title>Другая страница</title>
+<button id="button" disabled>Подождите пожалуйста...</button>
+<script>
+  // Получаем кнопку по ее ID
+  const button = document.getElementById('button');
+
+  // Запускаем таймер
+  setTimeout(() => {
+    button.removeAttribute('disabled'); // Разблокируем кнопку
+    button.textContent = 'Перейти на страницу'; // Меняем текст
+  }, 5000);
+
+  // Добавляем действие при клике (переход на другую страницу)
+  button.addEventListener('click', () => {
+    window.location.href = 'https://velyminovo.vercel.app';
+  });
+</script>
