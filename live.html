@@ -8,22 +8,26 @@
         /* Обнуляем отступы и растягиваем страницу на весь экран */
         body {
             margin: 0;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             background-color: #f0f2f5;
             font-family: Arial, sans-serif;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
-        /* Зелёный квадрат по центру */
+        /* Зелёный квадрат по центру с адаптивностью */
         .green-box {
-            width: 500px;
-            height: 500px;
+            width: 100%;
+            max-width: 600px;
+            min-height: 400px;
             background-color: #2ed573;
             box-sizing: border-box;
             padding: 30px;
             display: flex;
+            flex-direction: row;
             align-items: center;
             justify-content: space-between;
             gap: 20px;
@@ -34,7 +38,7 @@
         /* Контейнер для видео */
         .video-container {
             flex: 1;
-            height: auto;
+            width: 100%;
         }
 
         .video-container video {
@@ -51,6 +55,14 @@
             font-size: 16px;
             line-height: 1.5;
         }
+
+        /* Адаптивность для мобильных устройств (экраны менее 600px) */
+        @media (max-width: 600px) {
+            .green-box {
+                flex-direction: column;
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -58,7 +70,7 @@
     <div class="green-box">
         <!-- Блок с видео -->
         <div class="video-container">
-            <video controls muted autoplay loop>
+            <video controls muted autoplay loop playsinline>
                 <source src="video/0.mp4" type="video/mp4">
                 Ваш браузер не поддерживает видео.
             </video>
@@ -68,17 +80,22 @@
         <div class="text-container">
             <h3>7 августа: Новое Вельяминово</h3>
             <p>
-                Скоро будет осень. Надо готовить растения к зиме
-                ######################LIVE######################
-                Школьникам продали балон с газом. 
-                В дургом магазине школьники купили конструкцию для горелки.
-                Итог: школьники сожгли каркасный дом и гараж. Продовец нарушил закон
+                Скоро будет осень. Надо готовить растения к зиме.<br>
+                <strong>######################LIVE######################</strong><br>
+                Школьникам продали баллон с газом. <br>
+                В другом магазине школьники купили конструкцию для горелки.<br>
+                Итог: школьники сожгли каркасный дом и гараж. Продавец нарушил закон.
             </p>
         </div>
     </div>
 
-</body>
 <script>
-    window.history.pushState({}, '', '/plan');
+    // Безопасная подмена URL
+    try {
+        window.history.pushState({}, '', '/plan');
+    } catch (e) {
+        console.error('Ошибка изменения пути:', e);
+    }
 </script>
+</body>
 </html>
