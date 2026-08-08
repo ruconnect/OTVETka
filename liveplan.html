@@ -64,6 +64,46 @@
             background: #007bff;
             transition: width 1s linear;
         }
+
+        .slider-container {
+            width: 80%;
+            max-width: 500px;
+            margin: 20px auto;
+            display: none;
+        }
+
+        .slider-container input[type="range"] {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            background: #ddd;
+            outline: none;
+            border-radius: 4px;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #48ff00;
+            cursor: pointer;
+        }
+
+        .slider-container input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #48ff00;
+            cursor: pointer;
+            border: none;
+        }
+
+        .slider-label {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #555;
+        }
     </style>
 </head>
 <body>
@@ -73,53 +113,103 @@
     </header>
 
     <main>
-        <button id="startButton">Перейти к страннице</button>
+        <button id="startButton">Перейти к новостям</button>
 
         <div class="progress-container" id="progressContainer">
             <div class="progress-bar" id="progressBar"></div>
         </div>
 
+        <div class="slider-container" id="sliderContainer">
+            <input type="range" id="slider" min="0" max="100" value="0">
+            <div class="slider-label" id="sliderLabel">Перетащите ползунок вправо</div>
+        </div>
+
         <div id="timer">
-            Нажмите кнопу для загрузки live режима
+            Нажмите кнопку для загрузки новостей
         </div>
     </main>
 
     <script>
-        window.history.pushState({}, '', '/plan');
         function getRandomInt(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
         const button = document.getElementById("startButton");
         const timerText = document.getElementById("timer");
         const progressContainer = document.getElementById("progressContainer");
         const progressBar = document.getElementById("progressBar");
+        const sliderContainer = document.getElementById("sliderContainer");
+        const slider = document.getElementById("slider");
+        const sliderLabel = document.getElementById("sliderLabel");
+
+        let secondsLeft = 0;
+        let totalSeconds = 0;
+        let timerInterval = null;
+        let sliderCompleted = false;
 
         button.addEventListener("click", function() {
-            let secondsLeft = 24;
-            const totalSeconds = 24;
+            // Генерируем случайное время ожидания
+            secondsLeft = getRandomInt(8, 180);
+            totalSeconds = secondsLeft;
 
+            // Активируем интерфейс
             button.disabled = true;
             progressContainer.style.display = "block";
+            sliderContainer.style.display = "block";
             timerText.textContent = "Осталось секунд: " + secondsLeft;
             progressBar.style.width = "0%";
 
-            const timer = setInterval(function() {
+            // Сбрасываем флаг завершения слайдера
+            sliderCompleted = false;
+            slider.value = "0";
+            sliderLabel.textContent = "Перетащите ползунок вправо";
+
+            // Запускаем таймер
+            timerInterval = setInterval(function() {
                 secondsLeft--;
 
                 const progress = ((totalSeconds - secondsLeft) / totalSeconds) * 100;
                 progressBar.style.width = progress + "%";
-                timerText.textContent = "Подождите " + secondsLeft;
+                timerText.textContent = "Подождите: " + secondsLeft + " с";
 
-                if (secondsLeft <= 0) {
-                    clearInterval(timer);
-                    progressBar.style.width = "100%";
-                    timerText.textContent = "Страница";
-
-                    window.location.href = "live.html";
+                // Проверяем, можно ли перейти
+                if (secondsLeft <= 0 && sliderCompleted) {
+                    finish();
+                } else if (secondsLeft <= 0) {
+                    // Таймер закончился, но слайдер не дотянут — меняем подсказку
+                    sliderLabel.textContent = "Теперь перетащите ползунок до конца";
                 }
             }, 1000);
-        });
-    </script>
 
+            // Обработчик слайдера
+            slider.addEventListener("input", function() {
+                if (slider.value === "100") {
+                    sliderCompleted = true;
+                    sliderLabel.textContent = "Готово! Ожидайте окончания таймера...";
+                    // Если уже прошло время — сразу завершаем
+                    if (secondsLeft <= 0) {
+                        finish();
+                    }
+                } else {
+                    sliderCompleted = false;
+                    if (secondsLeft > 0) {
+                        sliderLabel.textContent = "Перетащите ползунок вправо";
+                    }
+                }
+            });
+        });
+
+        function finish() {
+            clearInterval(timerInterval);
+            progressBar.style.width = "100%";
+            timerText.textContent = "Загрузка завершена!";
+            sliderLabel.textContent = "Переход...";
+            
+            // Через 1 секунду переходим
+            setTimeout(() => {
+                window.location.href = "new.html";
+            }, 1000);
+        }
+    </script>
 </body>
 </html>
