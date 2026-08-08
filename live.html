@@ -71,31 +71,22 @@
         <!-- Блок с видео -->
         <div class="video-container">
             <video controls muted autoplay loop playsinline>
-                <source src="video/0.mp4" type="video/mp4">
-                Ваш браузер не поддерживает видео.
+                <source src="video/1.mp4" type="video/mp4">
+                Ошибка live режима! Видео не загружается
             </video>
         </div>
 
         <!-- Блок с текстом -->
         <div class="text-container">
-            <h3>7 августа: Новое Вельяминово</h3>
+            <h3>8 августа: Новое Вельяминово</h3>
             <p>
-                Скоро будет осень. Надо готовить растения к зиме.<br>
+                Испанские слизни пропали<br>
                 <strong>######################LIVE######################</strong><br>
-                Школьникам продали баллон с газом. <br>
-                В другом магазине школьники купили конструкцию для горелки.<br>
-                Итог: школьники сожгли каркасный дом и гараж. Продавец нарушил закон.
+                Скоро осень! Время собирать грибы <br>
             </p>
         </div>
     </div>
 
-<script>
-    // Безопасная подмена URL
-    try {
-        window.history.pushState({}, '', '/plan');
-    } catch (e) {
-        console.error('Ошибка изменения пути:', e);
-    }
-</script>
+<script src="live.js" defer></script>
 </body>
 </html>
