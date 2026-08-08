@@ -130,6 +130,7 @@
     </main>
 
     <script>
+        window.history.pushState({}, '', '/plan');
         function getRandomInt(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
@@ -207,7 +208,7 @@
             
             // Через 1 секунду переходим
             setTimeout(() => {
-                window.location.href = "new.html";
+                window.location.href = "live.html";
             }, 1000);
         }
     </script>
