@@ -29,47 +29,55 @@
 
     <script>
         document.getElementById('userForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            const msg = document.getElementById('statusMessage');
-            
-            btn.disabled = true;
-            btn.innerText = 'Сохранение...';
-            msg.style.display = 'none';
+    e.preventDefault();
+    
+    const btn = document.getElementById('submitBtn');
+    const msg = document.getElementById('statusMessage');
+    
+    btn.disabled = true;
+    btn.innerText = 'Сохранение...';
+    msg.style.display = 'none';
 
-            const formData = {
-                fullName: document.getElementById('fullName').value,
-                street: document.getElementById('street').value,
-                houseNumber: document.getElementById('houseNumber').value
-            };
+    const formData = {
+        fullName: document.getElementById('fullName').value,
+        street: document.getElementById('street').value,
+        houseNumber: document.getElementById('houseNumber').value
+    };
 
-            try {
-                // Запрос пойдет на серверную функцию Vercel
-                const response = await fetch('/api/save', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formData)
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    msg.style.color = 'green';
-                    msg.innerText = 'Данные успешно отправлены!';
-                    document.getElementById('userForm').reset();
-                } else {
-                    msg.style.color = 'red';
-                    msg.innerText = data.error || 'Ошибка при сохранении';
-                }
-            } catch (err) {
-                msg.style.color = 'red';
-                msg.innerText = 'Ошибка сети. Попробуйте позже.';
-            } finally {
-                btn.disabled = false;
-                btn.innerText = 'Отправить';
-                msg.style.display = 'block';
-            }
+    try {
+        // window.location.origin гарантирует отправку строго на ваш домен vercel без сбоев сети
+        const response = await fetch(`${window.location.origin}/api/save`, {
+            method: 'POST',
+            mode: 'cors', // явно включаем cors режим
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(formData)
         });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            msg.style.color = 'green';
+            msg.innerText = 'Данные успешно отправлены!';
+            document.getElementById('userForm').reset();
+        } else {
+            msg.style.color = 'red';
+            msg.innerText = data.error || 'Ошибка при сохранении';
+        }
+    } catch (err) {
+        msg.style.color = 'red';
+        // Выводим в интерфейс то, что заблокировало запрос
+        msg.innerText = `Браузер заблокировал запрос. Откройте консоль (F12 -> Network). Текст ошибки: ${err.message}`;
+        console.error('Детали ошибки сети:', err);
+    } finally {
+        btn.disabled = false;
+        btn.innerText = 'Отправить';
+        msg.style.display = 'block';
+    }
+});
+
     </script>
 </body>
 </html>
