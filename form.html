@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ввод данных</title>
+</head>
+<body style="max-width: 400px; margin: 50px auto; padding: 20px; font-family: sans-serif;">
+
+    <h2>Заполнение данных</h2>
+    
+    <form id="userForm" style="display: flex; flex-direction: column; gap: 15px;">
+        <div>
+            <label style="display: block; margin-bottom: 5px;">ФИО:</label>
+            <input type="text" id="fullName" required style="width: 100%; padding: 8px; box-sizing: border-box;">
+        </div>
+        <div>
+            <label style="display: block; margin-bottom: 5px;">Улица:</label>
+            <input type="text" id="street" required style="width: 100%; padding: 8px; box-sizing: border-box;">
+        </div>
+        <div>
+            <label style="display: block; margin-bottom: 5px;">Номер дома:</label>
+            <input type="text" id="houseNumber" required style="width: 100%; padding: 8px; box-sizing: border-box;">
+        </div>
+        <button type="submit" id="submitBtn" style="padding: 10px; cursor: pointer;">Отправить</button>
+    </form>
+
+    <p id="statusMessage" style="margin-top: 20px; font-weight: bold; display: none;"></p>
+
+    <script>
+        document.getElementById('userForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const msg = document.getElementById('statusMessage');
+            
+            btn.disabled = true;
+            btn.innerText = 'Сохранение...';
+            msg.style.display = 'none';
+
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                street: document.getElementById('street').value,
+                houseNumber: document.getElementById('houseNumber').value
+            };
+
+            try {
+                // Запрос пойдет на серверную функцию Vercel
+                const response = await fetch('/api/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    msg.style.color = 'green';
+                    msg.innerText = 'Данные успешно отправлены!';
+                    document.getElementById('userForm').reset();
+                } else {
+                    msg.style.color = 'red';
+                    msg.innerText = data.error || 'Ошибка при сохранении';
+                }
+            } catch (err) {
+                msg.style.color = 'red';
+                msg.innerText = 'Ошибка сети. Попробуйте позже.';
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Отправить';
+                msg.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
