@@ -9,7 +9,6 @@
             box-sizing: border-box;
             user-select: none;
             -webkit-user-select: none;
-            touch-action: none; /* Отключает зум и скролл экрана при перетаскивании */
         }
         body {
             font-family: Arial, sans-serif;
@@ -37,50 +36,75 @@
             overflow: hidden;
             margin-bottom: 20px;
         }
+        
+        /* Базовые стили для деталей пазла */
         .puzzle-piece {
             width: 60px;
             height: 60px;
             position: absolute;
             top: 50px;
         }
+        /* Тень/мишень зафиксирована ровно на 70% ширины контейнера */
         .target-slot {
-            left: 200px; /* Позиция серой тени-цели */
+            left: 70%;
             opacity: 0.15;
             fill: #2ebb7b;
         }
+        /* Зеленый пазл двигается чисто на CSS за счет переменной --progress */
         .movable-piece {
-            left: 20px; /* Начальная позиция зеленого пазла */
+            /* Формула: стартует от 5%, двигается максимум до 80% ширины поля */
+            left: calc(5% + (var(--progress, 0) * 0.75%));
             z-index: 10;
             fill: #2ebb7b;
             filter: drop-shadow(0px 2px 5px rgba(0,0,0,0.2));
         }
-        .slider-track {
+
+        /* Оболочка слайдера */
+        .slider-track-wrapper {
             position: relative;
             width: 100%;
             height: 44px;
             background-color: #f5fafd;
             border-radius: 8px;
             border: 1px solid #e1e8ed;
+            overflow: hidden;
         }
-        .slider-handle {
+
+        /* Скрываем стандартный вид инпута и превращаем его в невидимую зону для тача */
+        .captcha-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 100%;
+            background: transparent;
             position: absolute;
             top: 0;
             left: 0;
+            margin: 0;
+            cursor: pointer;
+            z-index: 20;
+            outline: none;
+        }
+
+        /* Кастомная кнопка-ползунок, которая двигается по экрану */
+        .custom-handle {
+            position: absolute;
+            top: 0;
+            /* Двигается синхронно с инпутом от 0% до конца контейнера за вычетом своей ширины */
+            left: calc(var(--progress, 0) * 1% - (var(--progress, 0) * 0.54px));
             width: 54px;
             height: 42px;
             background-color: #cce9f5;
             border-radius: 7px;
-            cursor: grab;
             display: flex;
             justify-content: center;
             align-items: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            pointer-events: none; /* Чтобы не мешать кликам по инпуту */
+            z-index: 15;
         }
-        .slider-handle:active {
-            cursor: grabbing;
-            background-color: #b4dfef;
-        }
-        .slider-handle svg {
+
+        .custom-handle svg {
             width: 18px;
             height: 14px;
             fill: none;
@@ -89,25 +113,34 @@
             stroke-linecap: round;
             stroke-linejoin: round;
         }
+
+        /* Плавное возвращение назад при промахе */
+        .smooth-return {
+            transition: left 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
     </style>
 </head>
 <body>
 
-<div class="captcha-container">
+<div class="captcha-container" id="captchaContainer">
     <div class="bg-area">
-        <!-- Тень/цель (куда нужно поставить пазл) -->
+        <!-- Тень/цель (находится на 70%) -->
         <svg class="puzzle-piece target-slot" viewBox="0 0 100 100">
             <path d="M30,20 C30,10 40,10 45,15 C50,20 50,30 60,30 C70,30 70,40 65,45 C60,50 50,50 50,60 C50,70 60,70 65,75 C70,80 60,90 50,90 C40,90 40,80 35,75 C30,70 20,70 20,60 C20,50 30,50 30,40 C30,30 20,30 15,25 C10,20 20,20 30,20 Z"/>
         </svg>
         
-        <!-- Активный зеленый пазл -->
+        <!-- Подвижный зеленый пазл -->
         <svg class="puzzle-piece movable-piece" id="puzzlePiece" viewBox="0 0 100 100">
             <path d="M30,20 C30,10 40,10 45,15 C50,20 50,30 60,30 C70,30 70,40 65,45 C60,50 50,50 50,60 C50,70 60,70 65,75 C70,80 60,90 50,90 C40,90 40,80 35,75 C30,70 20,70 20,60 C20,50 30,50 30,40 C30,30 20,30 15,25 C10,20 20,20 30,20 Z"/>
         </svg>
     </div>
     
-    <div class="slider-track" id="sliderTrack">
-        <div class="slider-handle" id="sliderHandle">
+    <div class="slider-track-wrapper">
+        <!-- Стандартный ползунок от 0 до 100 -->
+        <input type="range" min="0" max="100" value="0" class="captcha-slider" id="captchaSlider">
+        
+        <!-- Красивая кнопка поверх него -->
+        <div class="custom-handle" id="customHandle">
             <svg viewBox="0 0 18 14">
                 <path d="M1 1l5 6-5 6M6 1l5 6-5 6M11 1l5 6-5 6"/>
             </svg>
@@ -116,79 +149,50 @@
 </div>
 
 <script>
-    const handle = document.getElementById('sliderHandle');
-    const track = document.getElementById('sliderTrack');
+    const slider = document.getElementById('captchaSlider');
+    const handle = document.getElementById('customHandle');
     const piece = document.getElementById('puzzlePiece');
+    const container = document.getElementById('captchaContainer');
 
-    const startX = 20;     // Начальная позиция пазла
-    const targetX = 200;   // Позиция цели
-    const tolerance = 12;  // Погрешность для защиты от тряски рук
+    // Поскольку цель на 70%, то при значении инпута 86.5% пазл встает идеально ровно поверх тени
+    const targetValue = 86.5; 
+    const tolerance = 4; // Допустимая погрешность (чуть левее или чуть правее)
 
-    let isDragging = false;
-    let startXOffset = 0;
-
-    // Функция для обработки начала перетаскивания (ПК и Мобильные)
-    function onStart(clientX) {
-        isDragging = true;
-        startXOffset = clientX - handle.offsetLeft;
-        handle.style.transition = 'none';
-        piece.style.transition = 'none';
-    }
-
-    // Функция для расчета движения бегунка и пазла
-    function onMove(clientX) {
-        if (!isDragging) return;
+    // При движении ползунка просто передаем его значение в CSS-переменную
+    slider.addEventListener('input', () => {
+        handle.classList.remove('smooth-return');
+        piece.classList.remove('smooth-return');
         
-        const maxSlide = 252; // Точный размер свободного хода внутри трека (308px трек - 56px бегунок)
-        let currentLeft = clientX - startXOffset;
-        
-        // Ограничиваем бегунок рамками дорожки
-        if (currentLeft < 0) currentLeft = 0;
-        if (currentLeft > maxSlide) currentLeft = maxSlide;
-        
-        handle.style.left = currentLeft + 'px';
-        piece.style.left = (startX + currentLeft) + 'px';
-    }
+        container.style.setProperty('--progress', slider.value);
+    });
 
-    // Функция завершения перетаскивания
-    function onEnd() {
-        if (!isDragging) return;
-        isDragging = false;
+    // Когда пользователь отпустил ползунок (на ПК или телефоне)
+    function checkResult() {
+        const val = parseFloat(slider.value);
 
-        const currentPieceX = piece.offsetLeft;
-
-        // Если попали в цель
-        if (Math.abs(currentPieceX - targetX) <= tolerance) {
-            piece.style.left = targetX + 'px';
-            handle.style.left = (targetX - startX) + 'px';
-        
+        // Проверяем, попал ли ползунок в целевое значение
+        if (Math.abs(val - targetValue) <= tolerance) {
+            // Успех: выставляем идеальное совпадение деталей
+            container.style.setProperty('--progress', targetValue);
+            slider.value = targetValue;
+            slider.disabled = true; // Блокируем, чтобы нельзя было увести обратно
+            
+            // ПЕРЕХОД НА ДРУГУЮ СТРАНИЦУ
             setTimeout(() => {
                 window.location.href = 'https://dvertsov.ru/product/vhodnaya-dver-smart-chyornyy-silk-panel-gladkaya'; 
-            }, 150);
+            }, 250);
         } else {
-            // Если промахнулись — возвращаем все назад с красивой плавной анимацией
-            handle.style.transition = 'left 0.3s cubic-bezier(0.25, 1, 0.5, 1)';
-            piece.style.transition = 'left 0.3s cubic-bezier(0.25, 1, 0.5, 1)';
-            handle.style.left = '0px';
-            piece.style.left = startX + 'px';
+            // Промах: включаем CSS-анимацию и сбрасываем в ноль
+            handle.classList.add('smooth-return');
+            piece.classList.add('smooth-return');
+            
+            slider.value = 0;
+            container.style.setProperty('--progress', 0);
         }
     }
 
-    // Обработка кликов МЫШИ (ПК)
-    handle.addEventListener('mousedown', (e) => onStart(e.clientX));
-    window.addEventListener('mousemove', (e) => onMove(e.clientX));
-    window.addEventListener('mouseup', onEnd);
-
-    // Обработка ТАЧ-событий (Телефоны/Планшеты)
-    handle.addEventListener('touchstart', (e) => {
-        if (e.touches.length > 0) onStart(e.touches[0].clientX);
-    }, { passive: true });
-
-    window.addEventListener('touchmove', (e) => {
-        if (e.touches.length > 0) onMove(e.touches[0].clientX);
-    }, { passive: false });
-
-    window.addEventListener('touchend', onEnd);
+    slider.addEventListener('change', checkResult);
+    slider.addEventListener('touchend', checkResult);
 </script>
 
 </body>
