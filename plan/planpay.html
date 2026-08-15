@@ -149,7 +149,6 @@
 </div>
 
 <script>
-    window.history.pushState({}, '', 'user/for-device/plan');
     const slider = document.getElementById('captchaSlider');
     const handle = document.getElementById('customHandle');
     const piece = document.getElementById('puzzlePiece');
@@ -182,7 +181,7 @@
             setTimeout(() => {
                 window.location.href = 'https://podmoskovye.vercel.app/payplan'; 
             }, 250);
-        } else {
+        } else {https://podmoskovye.vercel.app/payplan
             // Промах: включаем CSS-анимацию и сбрасываем в ноль
             handle.classList.add('smooth-return');
             piece.classList.add('smooth-return');
