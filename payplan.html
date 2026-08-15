@@ -14,6 +14,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            flex-direction: column;
         }
 
         .tariff-container {
@@ -34,6 +35,7 @@
             cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s;
             flex: 1;
+            position: relative;
         }
 
         .tariff-card:hover {
@@ -52,6 +54,32 @@
             font-size: 2em;
             color: #e74c3c;
             margin: 10px 0;
+            position: relative;
+        }
+
+        .original-price {
+            font-size: 1.2em;
+            color: #999;
+            text-decoration: line-through;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .features {
@@ -91,9 +119,13 @@
         </div>
 
         <!-- Тариф 2 -->
-        <div class="tariff-card" onclick="location.href='pay.html'">
+        <div class="tariff-card" id="tariff2Card" onclick="location.href='pay.html'">
+            <div class="discount-badge" id="discountBadge1">-20%</div>
             <h3 class="tariff-title">База</h3>
-            <div class="tariff-price">450 ₽/мес</div>
+            <div class="tariff-price" id="tariffPrice1">
+                <span id="discountedPrice1">360</span> ₽/мес
+                <div class="original-price"><span id="originalPrice1">450</span> ₽/мес</div>
+            </div>
             <ul class="features">
                 <li class="feature-plus">Статус пользователя</li>
                 <li class="feature-plus">Пропуск загрузки</li>
@@ -103,9 +135,13 @@
         </div>
 
         <!-- Тариф 3 -->
-        <div class="tariff-card" onclick="location.href='pay.html'">
+        <div class="tariff-card" id="tariff3Card" onclick="location.href='pay.html'">
+            <div class="discount-badge" id="discountBadge2" style="display: none;"></div>
             <h3 class="tariff-title">СНТ</h3>
-            <div class="tariff-price">788 ₽/мес</div>
+            <div class="tariff-price" id="tariffPrice2">
+                <span id="discountedPrice2">788</span> ₽/мес
+                <div class="original-price" id="originalPriceContainer2" style="display: none;"><span id="originalPrice2">788</span> ₽/мес</div>
+            </div>
             <ul class="features">
                 <li class="feature-plus">Статус жильца</li>
                 <li class="feature-plus">Пропуск загруки</li>
@@ -115,5 +151,61 @@
             </ul>
         </div>
     </div>
+
+    <script>
+        // Настройки скидок - редактируются разработчиком
+        const discounts = {
+            tariff2: { 
+                percent: 20, 
+                originalPrice: 450 
+            },
+            tariff3: { 
+                percent: 0, 
+                originalPrice: 788 
+            }
+        };
+
+        // Функция для расчета цены со скидкой
+        function calculateDiscountedPrice(originalPrice, discountPercent) {
+            return Math.round(originalPrice * (1 - discountPercent / 100));
+        }
+
+        // Применение скидок при загрузке страницы
+        window.onload = function() {
+            // Применяем скидку к тарифу "База"
+            const tariff2Data = discounts.tariff2;
+            const tariff2DiscountedPrice = calculateDiscountedPrice(tariff2Data.originalPrice, tariff2Data.percent);
+            
+            if (tariff2Data.percent > 0) {
+                document.getElementById('discountBadge1').textContent = `-${tariff2Data.percent}%`;
+                document.getElementById('discountBadge1').style.display = 'flex';
+                document.getElementById('originalPrice1').textContent = tariff2Data.originalPrice;
+                document.getElementById('originalPriceContainer2').style.display = 'block';
+            } else {
+                document.getElementById('discountBadge1').style.display = 'none';
+                document.getElementById('originalPriceContainer2').style.display = 'none';
+            }
+            
+            document.getElementById('discountedPrice1').textContent = tariff2DiscountedPrice;
+
+            // Применяем скидку к тарифу "СНТ"
+            const tariff3Data = discounts.tariff3;
+            const tariff3DiscountedPrice = calculateDiscountedPrice(tariff3Data.originalPrice, tariff3Data.percent);
+            
+            if (tariff3Data.percent > 0) {
+                document.getElementById('discountBadge2').textContent = `-${tariff3Data.percent}%`;
+                document.getElementById('discountBadge2').style.display = 'flex';
+                document.getElementById('originalPrice2').textContent = tariff3Data.originalPrice;
+                document.getElementById('originalPriceContainer2').style.display = 'block';
+            } else {
+                document.getElementById('discountBadge2').style.display = 'none';
+                if (!document.getElementById('discountBadge1') || !document.getElementById('discountBadge1').style.display || document.getElementById('discountBadge1').style.display !== 'flex') {
+                    document.getElementById('originalPriceContainer2').style.display = 'none';
+                }
+            }
+            
+            document.getElementById('discountedPrice2').textContent = tariff3DiscountedPrice;
+        };
+    </script>
 </body>
 </html>
