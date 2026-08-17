@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>СНТ «Новое Вельяминово» — Татариново, Ступино</title>
+<meta name="description" content="Новости, платежи, показания счётчиков, документы и контакты СНТ «Новое Вельяминово».">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/golos-text@latest/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/golos-text@latest/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/golos-text@latest/600.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/golos-text@latest/700.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/unbounded@latest/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/unbounded@latest/700.css">
+<style>
+:root{
+  --bg:#f2ecdd; --paper:#fbf7ec; --card:#fffdf5;
+  --ink:#22301f; --muted:#6f7565; --line:#ddd2b8; --chip:#ece4cd;
+  --green:#1f4632; --green-2:#12301f; --green-3:#0e2418;
+  --amber:#e2a53b; --amber-2:#c98a22; --berry:#c15b3f;
+  --f-body:'Golos Text',system-ui,sans-serif; --f-disp:'Unbounded','Golos Text',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--f-body);background:#0e2418;color:var(--ink);font-size:15px;line-height:1.5;-webkit-tap-highlight-color:transparent}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;opacity:.05;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font-family:inherit;font-size:inherit;border:0;background:none;cursor:pointer;color:inherit}
+.app{max-width:480px;margin:0 auto;background:var(--bg);min-height:100vh;position:relative;box-shadow:0 0 80px rgba(0,0,0,.5);padding-bottom:96px}
+section{scroll-margin-top:72px}
+
+/* ---------- header ---------- */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--green-2);color:#f3ecd8;border-bottom:1px solid rgba(255,255,255,.08)}
+.topbar .mark{width:38px;height:38px;flex:none;border-radius:10px;background:var(--amber);display:grid;place-items:center;color:var(--green-3)}
+.topbar .mark svg{width:22px;height:22px}
+.topbar h1{font-family:var(--f-disp);font-weight:700;font-size:13px;letter-spacing:.02em;line-height:1.2}
+.topbar small{display:block;font-family:var(--f-body);font-weight:500;font-size:10.5px;color:#cfc4a4;letter-spacing:.08em;text-transform:uppercase;margin-top:2px}
+.topbar .call-mini{margin-left:auto;width:38px;height:38px;border-radius:10px;border:1px solid rgba(255,255,255,.25);display:grid;place-items:center;color:#f3ecd8;transition:transform .15s}
+.topbar .call-mini:active{transform:scale(.92)}
+.topbar .call-mini svg{width:18px;height:18px}
+
+/* ---------- hero ---------- */
+.hero{position:relative;height:352px;overflow:hidden;background:var(--green-3)}
+.hero-img{position:absolute;inset:0}
+.hero-img img{width:100%;height:100%;object-fit:cover;animation:kenburns 22s ease-in-out infinite alternate}
+@keyframes kenburns{from{transform:scale(1) translate(0,0)}to{transform:scale(1.1) translate(-2%,2%)}}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,36,24,.15) 0%,rgba(14,36,24,.05) 40%,rgba(14,36,24,.88) 100%)}
+.hero-body{position:absolute;left:0;right:0;bottom:0;padding:18px 18px 20px;color:#f6efdc;z-index:2}
+.kicker{display:flex;align-items:center;gap:8px;font-size:10.5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--amber)}
+.kicker::before{content:"";width:22px;height:2px;background:var(--amber)}
+.hero-body h2{font-family:var(--f-disp);font-weight:700;font-size:27px;line-height:1.12;margin:8px 0 12px;text-shadow:0 2px 14px rgba(0,0,0,.4)}
+.hero-chips{display:flex;flex-wrap:wrap;gap:6px}
+.hero-chips span{font-size:11px;font-weight:600;padding:5px 10px;border-radius:999px;background:rgba(14,36,24,.55);border:1px solid rgba(246,239,220,.3);backdrop-filter:blur(4px)}
+.statbar{display:grid;grid-template-columns:repeat(4,1fr);margin:-34px 14px 0;position:relative;z-index:3;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 10px 26px rgba(30,40,25,.14);padding:14px 6px}
+.statbar div{text-align:center;border-right:1px dashed var(--line)}
+.statbar div:last-child{border-right:0}
+.statbar b{display:block;font-family:var(--f-disp);font-weight:700;font-size:17px;color:var(--green)}
+.statbar i{font-style:normal;font-size:9.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* ---------- ticker ---------- */
+.ticker{margin-top:18px;background:var(--green-3);color:#efe6cd;overflow:hidden;border-block:1px solid rgba(255,255,255,.08)}
+.ticker-track{display:flex;width:max-content;animation:tick 30s linear infinite}
+.ticker:hover .ticker-track{animation-play-state:paused}
+.ticker-group{display:flex;align-items:center;padding:9px 0}
+.ticker-group span{display:flex;align-items:center;gap:8px;padding:0 18px;font-size:12px;font-weight:500;white-space:nowrap}
+.ticker-group span::after{content:"✳";color:var(--amber);margin-left:18px}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* ---------- sections ---------- */
+.sec{padding:30px 18px 6px}
+.sec-head{margin-bottom:16px}
+.sec-head h3{font-family:var(--f-disp);font-weight:700;font-size:20px;color:var(--green-2);margin-top:6px}
+.plotline{border-top:2px dashed var(--line);margin:26px 18px 0;position:relative}
+.plotline::after{content:"";position:absolute;top:-5px;left:0;width:8px;height:8px;background:var(--amber);transform:rotate(45deg)}
+
+/* ---------- quick actions ---------- */
+.qa{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qa button{display:flex;flex-direction:column;align-items:flex-start;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;text-align:left;transition:transform .15s,box-shadow .2s}
+.qa button:active{transform:scale(.96)}
+.qa .ic{width:40px;height:40px;border-radius:12px;background:var(--green);color:var(--amber);display:grid;place-items:center}
+.qa .ic svg{width:20px;height:20px}
+.qa b{font-size:14px;font-weight:700;color:var(--green-2)}
+.qa small{font-size:11.5px;color:var(--muted);margin-top:-6px}
+
+/* ---------- news ---------- */
+.news-card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:14px}
+.news-card .ph{position:relative;aspect-ratio:16/9;overflow:hidden}
+.news-card .ph img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+.news-card:hover .ph img{transform:scale(1.05)}
+.news-card .tag{position:absolute;top:10px;left:10px;background:var(--amber);color:var(--green-3);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 9px;border-radius:999px}
+.news-card .bd{padding:14px 16px 16px}
+.news-card .dt{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--berry)}
+.news-card h4{font-size:16px;font-weight:700;color:var(--green-2);margin:6px 0 6px;line-height:1.3}
+.news-card p{font-size:13.5px;color:var(--muted)}
+.more-btn{width:100%;padding:13px;border:2px dashed var(--line);border-radius:14px;font-weight:700;font-size:13.5px;color:var(--green);transition:background .2s}
+.more-btn:active{background:var(--chip)}
+[hidden]{display:none!important}
+
+/* ---------- payments ---------- */
+.pay-tabs{display:flex;gap:6px;background:var(--chip);padding:5px;border-radius:12px;margin-bottom:14px}
+.pay-tabs button{flex:1;padding:9px 4px;border-radius:9px;font-size:12.5px;font-weight:700;color:var(--muted);transition:all .2s}
+.pay-tabs button.active{background:var(--green);color:#f3ecd8;box-shadow:0 3px 8px rgba(18,48,31,.3)}
+.pay-panel{display:none}
+.pay-panel.active{display:block;animation:fadeUp .35s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.rate-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 2px;border-bottom:1px dashed var(--line);font-size:13.5px}
+.rate-row:last-of-type{border-bottom:0}
+.rate-row b{font-weight:700;color:var(--green-2);text-align:right;white-space:nowrap}
+.rate-row span{color:var(--muted)}
+.req-card{margin-top:14px;background:var(--green-2);color:#e9e0c6;border-radius:16px;padding:16px;position:relative;overflow:hidden}
+.req-card::before{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border:2px dashed rgba(226,165,59,.35);border-radius:50%}
+.req-card h5{font-family:var(--f-disp);font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--amber);margin-bottom:10px}
+.req-card dl{font-size:12px;line-height:1.7}
+.req-card dt{color:#a8b39b;display:inline}
+.req-card dd{display:inline;font-weight:600;letter-spacing:.02em}
+.req-card .rowline{display:block}
+.copy-btn{margin-top:12px;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--amber);color:var(--green-3);font-weight:700;font-size:13px;padding:11px;border-radius:11px;transition:transform .15s}
+.copy-btn:active{transform:scale(.96)}
+.copy-btn svg{width:16px;height:16px}
+
+/* ---------- meter form ---------- */
+.meter{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+.meter h4{font-family:var(--f-disp);font-size:14px;font-weight:700;color:var(--green-2)}
+.meter .hint{font-size:12px;color:var(--muted);margin:6px 0 12px}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.field{margin-bottom:10px}
+.field label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.field input{width:100%;padding:11px 12px;border-radius:11px;border:1.5px solid var(--line);background:var(--paper);font-family:inherit;font-size:15px;color:var(--ink);transition:border-color .2s}
+.field input:focus{outline:none;border-color:var(--green)}
+.field .err{display:none;font-size:11px;color:var(--berry);margin-top:4px;font-weight:600}
+.field.bad input{border-color:var(--berry)}
+.field.bad .err{display:block}
+.submit-btn{width:100%;margin-top:4px;background:var(--green);color:#f3ecd8;font-weight:700;font-size:14.5px;padding:13px;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .15s,background .2s}
+.submit-btn:active{transform:scale(.97)}
+.submit-btn svg{width:17px;height:17px}
+.last-meter{margin-top:10px;font-size:12px;color:var(--green);font-weight:600;display:flex;align-items:center;gap:6px}
+.last-meter svg{width:14px;height:14px;flex:none}
+
+/* ---------- events ---------- */
+.ev{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:10px;align-items:flex-start}
+.ev .date{flex:none;width:52px;text-align:center;background:var(--green);border-radius:11px;padding:7px 0 8px;color:#f3ecd8}
+.ev .date b{display:block;font-family:var(--f-disp);font-size:17px;font-weight:700;line-height:1}
+.ev .date i{font-style:normal;font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--amber)}
+.ev .info{flex:1}
+.ev .info h5{font-size:14px;font-weight:700;color:var(--green-2);line-height:1.3}
+.ev .info p{font-size:12px;color:var(--muted);margin-top:3px;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.ev .info p svg{width:12px;height:12px;flex:none}
+.ics-btn{flex:none;width:38px;height:38px;border:1.5px dashed var(--line);border-radius:11px;display:grid;place-items:center;color:var(--green);transition:all .2s}
+.ics-btn:active{background:var(--chip);transform:scale(.92)}
+.ics-btn svg{width:16px;height:16px}
+.week-note{display:flex;gap:8px;align-items:center;background:var(--chip);border-radius:12px;padding:11px 13px;font-size:12.5px;font-weight:600;color:var(--green-2)}
+.week-note svg{width:16px;height:16px;flex:none;color:var(--berry)}
+
+/* ---------- docs ---------- */
+.acc-item{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden}
+.acc-head{width:100%;display:flex;align-items:center;gap:12px;padding:13px 14px;text-align:left}
+.acc-head .fic{flex:none;width:38px;height:38px;border-radius:10px;background:var(--chip);color:var(--green);display:grid;place-items:center}
+.acc-head .fic svg{width:17px;height:17px}
+.acc-head .t{flex:1}
+.acc-head .t b{display:block;font-size:13.5px;font-weight:700;color:var(--green-2);line-height:1.3}
+.acc-head .t small{font-size:11px;color:var(--muted)}
+.acc-head .chev{flex:none;color:var(--muted);transition:transform .3s}
+.acc-head .chev svg{width:16px;height:16px;display:block}
+.acc-item.open .chev{transform:rotate(180deg)}
+.acc-panel{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.acc-inner{padding:0 14px 14px;border-top:1px dashed var(--line);padding-top:11px}
+.acc-inner p{font-size:12.5px;color:var(--muted);margin-bottom:10px}
+.dl-btn{display:inline-flex;align-items:center;gap:7px;background:var(--green);color:#f3ecd8;font-size:12.5px;font-weight:700;padding:9px 14px;border-radius:10px;transition:transform .15s}
+.dl-btn:active{transform:scale(.95)}
+.dl-btn svg{width:14px;height:14px}
+
+/* ---------- gallery ---------- */
+.gal-wrap{position:relative}
+.gal{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 18px 14px;margin:0 -18px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.gal::-webkit-scrollbar{display:none}
+.gal figure{flex:none;width:76%;scroll-snap-align:center;position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--card)}
+.gal figure img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.gal figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 12px 10px;color:#f6efdc;font-size:12px;font-weight:600;background:linear-gradient(180deg,transparent,rgba(14,36,24,.85))}
+.gal-count{position:absolute;top:-38px;right:18px;background:var(--green-2);color:var(--amber);font-family:var(--f-disp);font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px}
+
+/* ---------- map ---------- */
+.map-card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.map-card .mapimg{position:relative}
+.map-card .mapimg img{width:100%;aspect-ratio:1/1;object-fit:cover}
+.map-card .mapimg::after{content:"схема товарищества";position:absolute;bottom:10px;right:10px;background:rgba(14,36,24,.7);color:#efe6cd;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:4px 9px;border-radius:999px}
+.map-bd{padding:15px 16px 16px}
+.addr{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;font-weight:600;color:var(--green-2)}
+.addr svg{width:16px;height:16px;flex:none;color:var(--berry);margin-top:2px}
+.route{margin-top:12px;display:flex;flex-direction:column;gap:9px}
+.route li{list-style:none;display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:var(--muted)}
+.route li b{color:var(--green-2)}
+.route .ric{flex:none;width:30px;height:30px;border-radius:9px;background:var(--chip);color:var(--green);display:grid;place-items:center}
+.route .ric svg{width:15px;height:15px}
+.map-actions{display:flex;gap:8px;margin-top:14px}
+.map-actions a{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:11px;border-radius:11px;font-size:12.5px;font-weight:700;text-decoration:none;transition:transform .15s}
+.map-actions a:active{transform:scale(.96)}
+.map-actions .ya{background:var(--berry);color:#fff}
+.map-actions .rt{border:1.5px solid var(--green);color:var(--green)}
+.map-actions a svg{width:15px;height:15px}
+
+/* ---------- contacts ---------- */
+.contact-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.person{display:flex;gap:12px;align-items:center}
+.person .ava{flex:none;width:52px;height:52px;border-radius:50%;background:var(--green);color:var(--amber);display:grid;place-items:center;font-family:var(--f-disp);font-weight:700;font-size:16px}
+.person b{font-size:15px;color:var(--green-2)}
+.person small{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
+.big-phone{display:block;font-family:var(--f-disp);font-weight:700;font-size:19px;color:var(--green);text-decoration:none;margin:14px 0 4px;letter-spacing:.01em}
+.hours{display:flex;flex-direction:column;gap:6px;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+.hours li{list-style:none;display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted)}
+.hours li b{color:var(--green-2);font-weight:600}
+.c-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.c-actions a{display:flex;align-items:center;justify-content:center;gap:7px;padding:12px 6px;border-radius:12px;font-size:12.5px;font-weight:700;text-decoration:none;transition:transform .15s}
+.c-actions a:active{transform:scale(.95)}
+.c-actions .call{background:var(--green);color:#f3ecd8}
+.c-actions .wa{background:#25a06a;color:#fff}
+.c-actions .mail{grid-column:1/-1;border:1.5px solid var(--green);color:var(--green)}
+.c-actions a svg{width:15px;height:15px}
+
+/* ---------- faq ---------- */
+.faq .acc-head .t b{font-size:13.5px}
+
+/* ---------- footer ---------- */
+.footer{margin-top:30px;background:var(--green-3);color:#cfc4a4;padding:26px 18px 30px;text-align:center}
+.footer .fmark{width:44px;height:44px;margin:0 auto 12px;border-radius:12px;background:var(--amber);display:grid;place-items:center;color:var(--green-3)}
+.footer .fmark svg{width:24px;height:24px}
+.footer h6{font-family:var(--f-disp);font-size:13px;font-weight:700;color:#f3ecd8}
+.footer p{font-size:12px;margin-top:8px}
+.footer .fnav{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:14px}
+.footer .fnav a{font-size:11px;font-weight:700;text-decoration:none;padding:6px 11px;border:1px solid rgba(246,239,220,.25);border-radius:999px;color:#efe6cd}
+.footer .copy{margin-top:16px;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;opacity:.7}
+
+/* ---------- bottom nav ---------- */
+.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,480px);z-index:60;display:flex;background:var(--paper);border-top:1px solid var(--line);padding:8px 6px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -8px 24px rgba(20,30,20,.12)}
+.bnav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:5px 0;border-radius:10px;transition:color .2s}
+.bnav a svg{width:21px;height:21px;transition:transform .25s}
+.bnav a.active{color:var(--green)}
+.bnav a.active svg{transform:translateY(-2px)}
+.bnav a.active::after{content:"";display:block;width:4px;height:4px;border-radius:50%;background:var(--amber);margin-top:1px}
+
+/* ---------- toast ---------- */
+.toasts{position:fixed;bottom:96px;left:50%;transform:translateX(-50%);z-index:80;display:flex;flex-direction:column;gap:8px;align-items:center;width:min(92%,440px);pointer-events:none}
+.toast{background:var(--green-2);color:#f3ecd8;font-size:13px;font-weight:600;padding:11px 18px;border-radius:999px;box-shadow:0 10px 26px rgba(0,0,0,.3);display:flex;align-items:center;gap:8px;opacity:0;transform:translateY(14px);transition:all .3s ease;max-width:100%}
+.toast.show{opacity:1;transform:none}
+.toast svg{width:15px;height:15px;color:var(--amber);flex:none}
+
+/* ---------- reveal ---------- */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease var(--d,0s),transform .7s ease var(--d,0s)}
+.reveal.in{opacity:1;transform:none}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></symbol>
+  <symbol id="i-news" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h13v16H6a2 2 0 0 1-2-2V4z"/><path d="M17 8h3v10a2 2 0 0 1-2 2h-1"/><path d="M8 8h5M8 12h5M8 16h5"/></symbol>
+  <symbol id="i-rub" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21V3h6a4.5 4.5 0 0 1 0 9H7"/><path d="M7 16h7"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.25a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7a2 2 0 0 1 1.7 2z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="i-calplus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M12 14v6M9 17h6"/></symbol>
+  <symbol id="i-dl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 4 13c0-4 3-9 9-9 4.5 0 7 2.5 7 7 0 6-5 9-9 9z"/><path d="M4 21c4-6 8-9 12-11"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h8l-1 8 11-13h-8l0-7z"/></symbol>
+  <symbol id="i-drop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7s6.5 7 6.5 11.3a6.5 6.5 0 0 1-13 0C5.5 9.7 12 2.7 12 2.7z"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11 6.5 6.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11"/><rect x="3" y="11" width="18" height="7" rx="2"/><circle cx="7.5" cy="18" r="1.6"/><circle cx="16.5" cy="18" r="1.6"/></symbol>
+  <symbol id="i-train" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M9 21l-1.5-3M15 21l1.5-3"/><circle cx="9" cy="14" r=".8"/><circle cx="15" cy="14" r=".8"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M15.5 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 21l1.9-5.6A8.5 8.5 0 1 1 21 11.5z"/><path d="M9 9.5c.5 2.5 3 5 5.5 5.5l1-1.5 2 1c-.5 2-2 2.5-3.5 2-3.5-1-6-3.5-7-7-.5-1.5 0-3 2-3.5l1 2z"/></symbol>
+  <symbol id="i-route" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><circle cx="18" cy="5" r="3"/><path d="M9 19h6.5a3.5 3.5 0 0 0 0-7h-7a3.5 3.5 0 0 1 0-7H15"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10z"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4 20-7z"/></symbol>
+</svg>
+
+<div class="app">
+
+  <!-- ШАПКА -->
+  <header class="topbar">
+    <div class="mark"><svg><use href="#i-leaf"/></svg></div>
+    <div>
+      <h1>СНТ «НОВОЕ ВЕЛЬЯМИНОВО»</h1>
+      <small>с. Татариново · г.о. Ступино</small>
+    </div>
+    <a class="call-mini" href="tel:+79162457011" aria-label="Позвонить председателю"><svg><use href="#i-phone"/></svg></a>
+  </header>
+
+  <!-- ГЛАВНАЯ -->
+  <section id="top">
+    <div class="hero">
+      <div class="hero-img"><img src="https://image.qwenlm.ai/public_source/0b57ae73-b10c-4945-b2e0-47ad1495593b/10868103d-0467-430f-915c-45e19ed6c3f6.png" alt="Вид на товарищество с высоты"></div>
+      <div class="hero-body">
+        <div class="kicker">Садовое некоммерческое товарищество</div>
+        <h2>Новое<br>Вельяминово</h2>
+        <div class="hero-chips">
+          <span>≈ 50 км от МКАД</span><span>трасса М‑4 «Дон»</span><span>ст. Вельяминово</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="statbar reveal">
+      <div><b data-count="214">0</b><i>участков</i></div>
+      <div><b data-count="15">0</b><i>кВт на участок</i></div>
+      <div><b data-count="950">0</b><i>м до станции</i></div>
+      <div><b data-count="4">0</b><i>улицы</i></div>
+    </div>
+
+    <div class="ticker" aria-label="Объявления">
+      <div class="ticker-track">
+        <div class="ticker-group">
+          <span>Общее собрание членов СНТ — 21 июня в 11:00, дом правления</span>
+          <span>25 июня с 10:00 до 13:00 — плановые работы на линии электропередачи</span>
+          <span>Вывоз мусора: вторник и суббота</span>
+          <span>Летний водопровод работает с 1 мая</span>
+        </div>
+        <div class="ticker-group" aria-hidden="true">
+          <span>Общее собрание членов СНТ — 21 июня в 11:00, дом правления</span>
+          <span>25 июня с 10:00 до 13:00 — плановые работы на линии электропередачи</span>
+          <span>Вывоз мусора: вторник и суббота</span>
+          <span>Летний водопровод работает с 1 мая</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="qa">
+        <button class="reveal" data-goto="pokazaniya" style="--d:.05s"><span class="ic"><svg><use href="#i-zap"/></svg></span><b>Передать показания</b><small>свет и вода, до 25 числа</small></button>
+        <button class="reveal" data-goto="platezhi" style="--d:.1s"><span class="ic"><svg><use href="#i-rub"/></svg></span><b>Взносы и тарифы</b><small>реквизиты и сроки оплаты</small></button>
+        <button class="reveal" data-goto="dokumenty" style="--d:.15s"><span class="ic"><svg><use href="#i-folder"/></svg></span><b>Документы</b><small>устав, протоколы, сметы</small></button>
+        <button class="reveal" data-goto="karta" style="--d:.2s"><span class="ic"><svg><use href="#i-route"/></svg></span><b>Как добраться</b><small>авто, электричка, автобус</small></button>
+      </div>
+    </div>
+  </section>
+
+  <div class="plotline"></div>
+
+  <!-- НОВОСТИ -->
+  <section id="novosti" class="sec">
+    <div class="sec-head reveal">
+      <div class="kicker">01 · Жизнь товарищества</div>
+      <h3>Новости и объявления</h3>
+    </div>
+
+    <article class="news-card reveal">
+      <div class="ph"><img loading="lazy" src="https://image.qwenlm.ai/public_source/0b57ae73-b10c-4945-b2e0-47ad1495593b/111079324-4258-49e3-9e24-2fda8e8f2b30.png" alt="Грейдер выравнивает дорогу"><span class="tag">Благоустройство</span></div>
+      <div class="bd">
+        <div class="dt">2 июня 2025</div>
+        <h4>Центральная дорога отгрейдирована и отсыпана щебнем</h4>
+        <p>Проезд от ворот до улицы Звёздной выровнен, отсыпан щебнем и укатан. Просьба не парковать технику на обочинах до конца усадки.</p>
+      </div>
+    </article>
+
+    <article class="news-card reveal">
+      <div class="ph"><img loading="lazy" src="https://image.qwenlm.ai/public_source/0b57ae73-b10c-4945-b2e0-47ad1495593b/1a64ca1fa-bce5-4f12-9f5d-78ad62f1914c.png" alt="Соседи сажают деревья на субботнике"><span class="tag">Субботник</span></div>
+      <div class="bd">
+        <div class="dt">24 мая 2025</div>
+        <h4>Субботник: посадили 30 лип и открыли новую площадку</h4>
+        <p>Спасибо всем, кто вышел! Возле детской площадки появилась липовая аллея, а сама площадка прошла весенний осмотр и готова к сезону.</p>
+      </div>
+    </article>
+
+    <article class="news-card reveal">
+      <div class="ph"><img loading="lazy" src="https://image.qwenlm.ai/public_source/0b57ae73-b10c-4945-b2e0-47ad1495593b/18f5c765f-244a-41ec-b2c7-d078338a6125.png" alt="Светодиодные фонари на улице вечером"><span class="tag">Электричество</span></div>
+      <div class="bd">
+        <div class="dt">12 мая 2025</div>
+        <h4>На улице Светлой горят 26 новых светодиодных фонарей</h4>
+        <p>Завершили монтаж уличного освещения по целевому взносу. Фонари работают по фотореле — с заката до рассвета.</p>
+      </div>
+    </article>
+
+    <div id="newsMore" hidden>
+      <article class="news-card">
+        <div class="bd">
+          <div class="dt">28 апреля 2025 · Вода</div>
+          <h4>Открыт поливочный сезон</h4>
+          <p>Летний водопровод опрессован и запущен 1 мая. Проверьте краны на своих участках и сообщите о протечках в правление.</p>
+        </div>
+      </article>
+      <article class="news-card">
+        <div class="bd">
+          <div class="dt">6 апреля 2025 · Безопасность</div>
+          <h4>На въезде установлена шлагбаум‑автоматика</h4>
+          <p>Теперь въезд — по пультам и звонку на посту охраны. Гостям открывает охрана, телефоны — на стенде у ворот.</p>
+        </div>
+      </article>
+      <article class="news-card">
+        <div class="bd">
+          <div class="dt">15 марта 2025 · Собрание</div>
+          <h4>Собрание утвердило смету на 2025 год</h4>
+          <p>Приняты членские и целевые взносы, утверждён график ремонта дорог и план освещения улицы Дружбы на осень.</p>
+        </div>
+      </article>
+    </div>
+    <button class="more-btn" id="moreNewsBtn">Показать ещё 3 новости ↓</button>
+  </section>
+
+  <div class="plotline"></div>
+
+  <!-- ПЛАТЕЖИ -->
+  <section id="platezhi" class="sec">
+    <div class="sec-head reveal">
+      <div class="kicker">02 · Финансы</div>
+      <h3>Взносы и платежи</h3>
+    </div>
+
+    <div class="pay-tabs reveal" role="tablist">
+      <button class="active" data-tab="dues">Взносы</button>
+      <button data-tab="electro">Свет</button>
+      <button data-tab="water">Вода</button>
+    </div>
+
+    <div class="pay-panel active" data-panel="dues">
+      <div class="rate-row"><span>Членский взнос, за участок</span><b>6 500 ₽ / год</b></div>
+      <div class="rate-row"><span>Целевой взнос (дороги)</span><b>1 500 ₽ / год</b></div>
+      <div class="rate-row"><span>Оплата</span><b>до 1 декабря</b></div>
+      <div class="rate-row"><span>Пени при просрочке</span><b>0,1 % в день</b></div>
+    </div>
+    <div class="pay-panel" data-panel="electro">
+      <div class="rate-row"><span>Выделенная мощность</span><b>15 кВт</b></div>
+      <div class="rate-row"><span>Тариф</span><b>сельский, по МО</b></div>
+      <div class="rate-row"><span>Показания счётчика</span><b>с 20 по 25 число</b></div>
+      <div class="rate-row"><span>Договор</span><b>прямой, по границе</b></div>
+    </div>
+    <div class="pay-panel" data-panel="water">
+      <div class="rate-row"><span>Летний водопровод</span><b>48 ₽ / м³</b></div>
+      <div class="rate-row"><span>Сезон подачи</span><b>1 мая — 30 сен</b></div>
+      <div class="rate-row"><span>Консервация на зиму</span><b>бесплатно</b></div>
+    </div>
+
+    <div class="req-card reveal">
+      <h5>РЕКВИЗИТЫ ДЛЯ ОПЛАТЫ</h5>
+      <dl>
+        <span class="rowline"><dt>Получатель: </dt><dd>СНТ «Новое Вельяминово»</dd></span>
+        <span class="rowline"><dt>ИНН / КПП: </dt><dd>5005012345 / 500501001</dd></span>
+        <span class="rowline"><dt>Р/с: </dt><dd>40703810400000012345</dd></span>
+        <span class="rowline"><dt>Банк: </dt><dd>АО «Россельхозбанк»</dd></span>
+        <span class="rowline"><dt>БИК: </dt><dd>044525111</dd></span>
+        <span class="rowline"><dt>К/с: </dt><dd>30101810200000000111</dd></span>
+      </dl>
+      <button class="copy-btn" id="copyReq"><svg><use href="#i-copy"/></svg> Скопировать реквизиты</button>
+    </div>
+
+    <form class="meter reveal" id="meterForm" novalidate>
+      <h4 id="pokazaniya">Передать показания</h4>
+      <p class="hint">Принимались с 20 по 25 число каждого месяца. Данные увидит только правление.</p>
+      <div class="f-row">
+        <div class="field" id="fPlot">
+          <label for="inPlot">№ участка</label>
+          <input id="inPlot" inputmode="numeric" placeholder="Напр. 127">
+          <div class="err">Укажите номер от 1 до 214</div>
+        </div>
+        <div class="field" id="fKwh">
+          <label for="inKwh">Свет, кВт·ч</label>
+          <input id="inKwh" inputmode="numeric" placeholder="Напр. 4380">
+          <div class="err">Введите текущее значение</div>
+        </div>
+      </div>
+      <div class="field" id="fName">
+        <label for="inName">ФИО собственника</label>
+        <input id="inName" placeholder="Иванова Мария Петровна" autocomplete="name">
+        <div class="err">Укажите ФИО</div>
+      </div>
+      <div class="field">
+        <label for="inWater">Вода, м³ (необязательно)</label>
+        <input id="inWater" inputmode="decimal" placeholder="Напр. 12,5">
+      </div>
+      <button type="submit" class="submit-btn"><svg><use href="#i-send"/></svg> Отправить показания</button>
+      <div class="last-meter" id="lastMeter" hidden><svg><use href="#i-check"/></svg><span></span></div>
+    </form>
+  </section>
+
+  <div class="plotline"></div>
+
+  <!-- КАЛЕНДАРЬ -->
+  <section id="kalendar" class="sec">
+    <div class="sec-head reveal">
+      <div class="kicker">03 · Календарь</div>
+      <h3>Ближайшие события</h3>
+    </div>
+
+    <div class="ev reveal">
+      <div class="date"><b>21</b><i>июн</i></div>
+      <div class="info"><h5>Общее собрание членов СНТ</h5><p><svg><use href="#i-clock"/></svg> 11:00 · <svg><use href="#i-pin"/></svg> дом правления, уч. 1</p></div>
+      <button class="ics-btn" data-ics data-date="20250621" data-time="110000" data-hours="2" data-title="Общее собрание СНТ «Новое Вельяминово»" data-loc="дом правления, участок 1" aria-label="Добавить в календарь"><svg><use href="#i-calplus"/></svg></button>
+    </div>
+    <div class="ev reveal">
+      <div class="date"><b>25</b><i>июн</i></div>
+      <div class="info"><h5>Плановые работы на электросети</h5><p><svg><use href="#i-clock"/></svg> 10:00–13:00 · света не будет во всём товариществе</p></div>
+      <button class="ics-btn" data-ics data-date="20250625" data-time="100000" data-hours="3" data-title="Отключение электричества (плановое)" data-loc="СНТ Новое Вельяминово" aria-label="Добавить в календарь"><svg><use href="#i-calplus"/></svg></button>
+    </div>
+    <div class="ev reveal">
+      <div class="date"><b>05</b><i>июл</i></div>
+      <div class="info"><h5>Уборка контейнерной площадки</h5><p><svg><use href="#i-clock"/></svg> 9:00 · инвентарь выдаёт охрана</p></div>
+      <button class="ics-btn" data-ics data-date="20250705" data-time="090000" data-hours="2" data-title="Уборка контейнерной площадки" data-loc="СНТ Новое Вельяминово, въезд" aria-label="Добавить в календарь"><svg><use href="#i-calplus"/></svg></button>
+    </div>
+    <div class="ev reveal">
+      <div class="date"><b>02</b><i>авг</i></div>
+      <div class="info"><h5>Соседское чаепитие с самоваром</h5><p><svg><use href="#i-clock"/></svg> 17:00 · детская площадка, приходите с пирогами!</p></div>
+      <button class="ics-btn" data-ics data-date="20250802" data-time="170000" data-hours="3" data-title="Соседское чаепитие" data-loc="детская площадка, СНТ Новое Вельяминово" aria-label="Добавить в календарь"><svg><use href="#i-calplus"/></svg></button>
+    </div>
+    <div class="week-note reveal"><svg><use href="#i-clock"/></svg> Вывоз мусора (ТКО) — каждый вторник и субботу, до 8:00.</div>
+  </section>
+
+  <div class="plotline"></div>
+
+  <!-- ДОКУМЕНТЫ -->
+  <section id="dokumenty" class="sec">
+    <div class="sec-head reveal">
+      <div class="kicker">04 · Бумаги</div>
+      <h3>Документы товарищества</h3>
+    </div>
+
+    <div class="acc-item reveal">
+      <button class="acc-head" data-acc aria-expanded="false"><span class="fic"><svg><use href="#i-doc"/></svg></span><span class="t"><b>Устав СНТ (редакция 2023 года)</b><small>PDF · 1,4 МБ · утверждён собранием</small></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+      <div class="acc-panel"><div class="acc-inner"><p>Основной документ товарищества: порядок вступления, права и обязанности членов, работа правления и собраний.</p><button class="dl-btn" data-doc="Устав СНТ Новое Вельяминово (ред. 2023)"><svg><use href="#i-dl"/></svg> Скачать</button></div></div>
+    </div>
+    <div class="acc-item reveal">
+      <button class="acc-head" data-acc aria-expanded="false"><span class="fic"><svg><use href="#i-doc"/></svg></span><span class="t"><b>Правила внутреннего распорядка</b><small>PDF · 640 КБ · тишина, проезды, гости</small></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+      <div class="acc-panel"><div class="acc-inner"><p>Режим тишины с 21:00 до 8:00, скорость до 20 км/ч, гостевые парковки и правила пользования общей инфраструктурой.</p><button class="dl-btn" data-doc="Правила внутреннего распорядка"><svg><use href="#i-dl"/></svg> Скачать</button></div></div>
+    </div>
+    <div class="acc-item reveal">
+      <button class="acc-head" data-acc aria-expanded="false"><span class="fic"><svg><use href="#i-doc"/></svg></span><span class="t"><b>Смета доходов и расходов на 2025 год</b><small>PDF · 380 КБ · утверждена 15.03.2025</small></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+      <div class="acc-panel"><div class="acc-inner"><p>Постатейно: охрана, вывоз ТКО, электричество мест общего пользования, дороги, вода, резервный фонд.</p><button class="dl-btn" data-doc="Смета СНТ на 2025 год"><svg><use href="#i-dl"/></svg> Скачать</button></div></div>
+    </div>
+    <div class="acc-item reveal">
+      <button class="acc-head" data-acc aria-expanded="false"><span class="fic"><svg><use href="#i-doc"/></svg></span><span class="t"><b>Протокол общего собрания № 1 от 15.03.2025</b><small>PDF · 520 КБ · итоги голосования</small></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+      <div class="acc-panel"><div class="acc-inner"><p>Повестка, результаты голосования по смете, взносам и плану благоустройства, состав правления и ревизионной комиссии.</p><button class="dl-btn" data-doc="Протокол общего собрания №1 от 15.03.2025"><svg><use href="#i-dl"/></svg> Скачать</button></div></div>
+    </div>
+    <div class="acc-item reveal">
+      <button class="acc-head" data-acc aria-expanded="false"><span class="fic"><svg><use href="#i-doc"/></svg></span><span class="t"><b>Заявление на подключение электричества</b><small>DOCX · 90 КБ · бланк для новых участков</small></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+      <div class="acc-panel"><div class="acc-inner"><p>Бланк заявления на техприсоединение 15 кВт. Заполненный бланк подаётся в правление вместе с копией паспорта участка.</p><button class="dl-btn" data-doc="Заявление на подключение 15 кВт"><svg><use href="#i-dl"/></svg> Скачать</button></div></div>
+    </div>
+  </section>
+
+  <div class="plotline"></div>
+
+  <!-- ГАЛЕРЕЯ -->
+  <section id="galereya" class="sec">
+    <div class="sec-head reveal">
+      <div class="kicker">05 · Фотозарисовки</div>
+      <h3>Наше товарищество</h3>
+    </div>
+    <div class="gal-wrap reveal">
+      <span class="gal-count" id="galCount">1 / 4</span>
+      <div class="gal" id="gal">
+        <figure><img loading="lazy" src="https://image.qwenlm.ai/public_source/0b57ae73-b10c-4945-b2e0-47ad1495593b/1e171b484-ff3d-4c4a-a164-835176a319d2.png" alt="Берёзовая роща"><figcaption>Берёзовая роща у северных участков</figcaption></figure>
+        <figure><img loading="lazy" src="https://image.qwenlm.ai/public_source/0b57ae73-b10c-4945-b2e0-47ad1495593b/15c3b1dd6-d192-4ea0-a273-a99e6fcd645a.png" alt="Дом с пионами"><figcaption>Дом на улице Янтарной, июнь</figcaption></figure>
+        <figure><img loading="lazy" src="https://image.qwenlm.ai/public_source/0b57ae73-b10c-4945-b2e0-47ad1495593b/1cf807631-4f2d-45fd-a875-cd2b2068fd86.png" alt="Пруд"><figcaption>Пруд за лесной полосой</figcaption></figure>
+        <figure><img loading="lazy" src="https://image.qwenlm.ai/public_source/0b57ae73-b10c-4945-b2e0-47ad1495593b/1b2883f2d-2853-489f-afe6-8e098d1f7c12.png" alt="Детская площадка"><figcaption>Площадка на улице Светлой</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <div class="plotline"></div>
+
+  <!-- КАРТА -->
+  <section id="karta" class="sec">
+    <div class="sec-head reveal">
+      <div class="kicker">06 · Расположение</div>
+      <h3>Как добраться</h3>
+    </div>
+    <div class="map-card reveal">
+      <div class="mapimg"><img loading="lazy" src="https://image.qwenlm.ai/public_source/0b57ae73-b10c-4945-b2e0-47ad1495593b/1586e7bc1-8de8-4251-b1ae-4c53a9e9c933.png" alt="Схема товарищества"></div>
+      <div class="map-bd">
+        <div class="addr"><svg><use href="#i-pin"/></svg> Московская область, г.о. Ступино,<br>с. Татариново, мкр. Новое Вельяминово</div>
+        <ul class="route">
+          <li><span class="ric"><svg><use href="#i-car"/></svg></span><span><b>На машине:</b> ≈ 50 км от МКАД по трассе М‑4 «Дон» (Каширское ш.), далее в сторону ж/д переезда у с. Барыбино и на Татариново.</span></li>
+          <li><span class="ric"><svg><use href="#i-train"/></svg></span><span><b>На электричке:</b> Павелецкое направление до ст. Вельяминово, от станции ≈ 950 м пешком (~15 минут).</span></li>
+          <li><span class="ric"><svg><use href="#i-users"/></svg></span><span><b>На автобусе:</b> от м. Домодедовская до ост. «Вельяминово», далее пешком.</span></li>
+        </ul>
+        <div class="map-actions">
+          <a class="ya" href="https://yandex.ru/maps/?text=%D0%A2%D0%A1%D0%9D%20%D0%9D%D0%BE%D0%B2%D0%BE%D0%B5%20%D0%92%D0%B5%D0%BB%D1%8C%D1%8F%D0%BC%D0%B8%D0%BD%D0%BE%D0%B2%D0%BE%20%D0%A2%D0%B0%D1%82%D0%B0%D1%80%D0%B8%D0%BD%D0%BE%D0%B2%D0%BE" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg> Яндекс.Карты</a>
+          <a class="rt" href="https://yandex.ru/maps/?rtext=~55.345%2C37.915&rtt=auto" target="_blank" rel="noopener"><svg><use href="#i-route"/></svg> Маршрут</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="plotline"></div>
+
+  <!-- КОНТАКТЫ -->
+  <section id="kontakty" class="sec">
+    <div class="sec-head reveal">
+      <div class="kicker">07 · Правление</div>
+      <h3>Контакты</h3>
+    </div>
+
+    <div class="contact-card reveal">
+      <div class="person">
+        <div class="ava">ЕС</div>
+        <div><b>Елена Викторовна Соколова</b><small>председатель правления СНТ</small></div>
+      </div>
+      <a class="big-phone" href="tel:+79162457011">+7 916 245‑70‑11</a>
+      <ul class="hours">
+        <li><span>Приёмные часы (дом правления, уч. 1)</span><b>сб 10:00–14:00</b></li>
+        <li><span>Охрана, пост у ворот</span><b>круглосуточно</b></li>
+        <li><span>Аварийный электрик</span><b>+7 916 245‑70‑12</b></li>
+      </ul>
+      <div class="c-actions">
+        <a class="call" href="tel:+79162457011"><svg><use href="#i-phone"/></svg> Позвонить</a>
+        <a class="wa" href="https://wa.me/79162457011" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg> WhatsApp</a>
+        <a class="mail" href="mailto:snt.novoe.v@yandex.ru"><svg><use href="#i-mail"/></svg> snt.novoe.v@yandex.ru</a>
+      </div>
+    </div>
+
+    <div class="sec-head reveal" style="margin-top:26px">
+      <div class="kicker">Вопрос — ответ</div>
+      <h3>Частые вопросы</h3>
+    </div>
+    <div class="faq">
+      <div class="acc-item reveal">
+        <button class="acc-head" data-acc aria-expanded="false"><span class="fic"><svg><use href="#i-users"/></svg></span><span class="t"><b>Как вступить в товарищество?</b></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+        <div class="acc-panel"><div class="acc-inner"><p>Напишите заявление в правление (суббота, 10:00–14:00). При себе — паспорт и выписка из ЕГРН на участок. Решение принимает общее собрание.</p></div></div>
+      </div>
+      <div class="acc-item reveal">
+        <button class="acc-head" data-acc aria-expanded="false"><span class="fic"><svg><use href="#i-zap"/></svg></span><span class="t"><b>Пропал свет — куда звонить?</b></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+        <div class="acc-panel"><div class="acc-inner"><p>Сначала аварийному электрику: +7 916 245‑70‑12. Если отключение по всей линии — звоните в Мосэнергосбыт, договор у товарищества прямой.</p></div></div>
+      </div>
+      <div class="acc-item reveal">
+        <button class="acc-head" data-acc aria-expanded="false"><span class="fic"><svg><use href="#i-shield"/></svg></span><span class="t"><b>Как проедут гости?</b></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+        <div class="acc-panel"><div class="acc-inner"><p>Въезд по шлагбауму: гость звонит по номеру на табличке у ворот, либо вы предупреждаете охрану заранее по телефону правления.</p></div></div>
+      </div>
+      <div class="acc-item reveal">
+        <button class="acc-head" data-acc aria-expanded="false"><span class="fic"><svg><use href="#i-drop"/></svg></span><span class="t"><b>Есть ли вода зимой?</b></span><span class="chev"><svg><use href="#i-chev"/></svg></span></button>
+        <div class="acc-panel"><div class="acc-inner"><p>Летний водопровод работает с 1 мая по 30 сентября, на зиму консервируется. Круглогодичная вода — из собственных скважин и колодцев на участках.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ПОДВАЛ -->
+  <footer class="footer">
+    <div class="fmark"><svg><use href="#i-leaf"/></svg></div>
+    <h6>СНТ «НОВОЕ ВЕЛЬЯМИНОВО»</h6>
+    <p>Территория добрососедства: лес рядом, пруд за рощей,<br>до станции — пятнадцать минут неспешным шагом.</p>
+    <div class="fnav">
+      <a href="#novosti">Новости</a><a href="#platezhi">Платежи</a><a href="#dokumenty">Документы</a><a href="#karta">Карта</a><a href="#kontakty">Контакты</a>
+    </div>
+    <div class="copy">© 2025 · сделано жителями для жителей</div>
+  </footer>
+</div>
+
+<!-- НИЖНЯЯ НАВИГАЦИЯ -->
+<nav class="bnav" aria-label="Основная навигация">
+  <a href="#top" data-spy="top" class="active"><svg><use href="#i-home"/></svg>Главная</a>
+  <a href="#novosti" data-spy="novosti"><svg><use href="#i-news"/></svg>Новости</a>
+  <a href="#platezhi" data-spy="platezhi"><svg><use href="#i-rub"/></svg>Платежи</a>
+  <a href="#dokumenty" data-spy="dokumenty"><svg><use href="#i-folder"/></svg>Документы</a>
+  <a href="#kontakty" data-spy="kontakty"><svg><use href="#i-phone"/></svg>Контакты</a>
+</nav>
+
+<div class="toasts" id="toasts"></div>
+
+<script>
+(function(){
+"use strict";
+var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- toast ---------- */
+var toasts = document.getElementById('toasts');
+function toast(msg){
+  var t = document.createElement('div');
+  t.className = 'toast';
+  t.innerHTML = '<svg><use href="#i-check"/></svg>' + msg;
+  toasts.appendChild(t);
+  requestAnimationFrame(function(){ t.classList.add('show'); });
+  setTimeout(function(){ t.classList.remove('show'); setTimeout(function(){ t.remove(); }, 320); }, 2600);
+}
+
+/* ---------- reveal on scroll ---------- */
+var revealEls = document.querySelectorAll('.reveal');
+if (REDUCED || !('IntersectionObserver' in window)) {
+  revealEls.forEach(function(el){ el.classList.add('in'); });
+} else {
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: .12 });
+  revealEls.forEach(function(el){ io.observe(el); });
+}
+
+/* ---------- counters ---------- */
+function runCounter(el){
+  var target = parseInt(el.getAttribute('data-count'), 10);
+  if (REDUCED){ el.textContent = target.toLocaleString('ru-RU'); return; }
+  var t0 = null, dur = 1300;
+  function tick(t){
+    if (!t0) t0 = t;
+    var p = Math.min(1, (t - t0) / dur);
+    var eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(target * eased).toLocaleString('ru-RU');
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+var statbar = document.querySelector('.statbar');
+if (statbar){
+  var cio = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting){
+        statbar.querySelectorAll('[data-count]').forEach(runCounter);
+        cio.disconnect();
+      }
+    });
+  }, { threshold: .4 });
+  cio.observe(statbar);
+}
+
+/* ---------- quick actions scroll ---------- */
+document.querySelectorAll('[data-goto]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var target = document.getElementById(btn.getAttribute('data-goto'));
+    if (target) target.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' });
+  });
+});
+
+/* ---------- news more ---------- */
+var moreBtn = document.getElementById('moreNewsBtn');
+var moreWrap = document.getElementById('newsMore');
+moreBtn.addEventListener('click', function(){
+  var isHidden = moreWrap.hidden;
+  moreWrap.hidden = !isHidden;
+  moreBtn.textContent = isHidden ? 'Скрыть дополнительные новости ↑' : 'Показать ещё 3 новости ↓';
+  if (isHidden) toast('Показаны новости архива');
+});
+
+/* ---------- payment tabs ---------- */
+var tabs = document.querySelectorAll('.pay-tabs button');
+tabs.forEach(function(btn){
+  btn.addEventListener('click', function(){
+    tabs.forEach(function(b){ b.classList.toggle('active', b === btn); });
+    document.querySelectorAll('.pay-panel').forEach(function(p){
+      p.classList.toggle('active', p.getAttribute('data-panel') === btn.getAttribute('data-tab'));
+    });
+  });
+});
+
+/* ---------- copy requisites ---------- */
+var REQ = 'СНТ «Новое Вельяминово», ИНН 5005012345, КПП 500501001, р/с 40703810400000012345, АО «Россельхозбанк», БИК 044525111, к/с 30101810200000000111';
+document.getElementById('copyReq').addEventListener('click', function(){
+  function done(){ toast('Реквизиты скопированы'); }
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(REQ).then(done).catch(function(){ fallbackCopy(); });
+  } else fallbackCopy();
+  function fallbackCopy(){
+    var ta = document.createElement('textarea');
+    ta.value = REQ; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch(e){ toast('Не удалось скопировать'); }
+    ta.remove();
+  }
+});
+
+/* ---------- meter form ---------- */
+var form = document.getElementById('meterForm');
+var lastMeter = document.getElementById('lastMeter');
+function showLast(){
+  try {
+    var raw = localStorage.getItem('sntnv-meter');
+    if (raw){
+      var d = JSON.parse(raw);
+      lastMeter.hidden = false;
+      lastMeter.querySelector('span').textContent = 'Последняя передача: ' + d.date + ' — уч. ' + d.plot + ', ' + d.kwh + ' кВт·ч';
+    }
+  } catch(e){}
+}
+showLast();
+form.addEventListener('submit', function(ev){
+  ev.preventDefault();
+  var ok = true;
+  var plot = document.getElementById('inPlot').value.trim();
+  var kwh = document.getElementById('inKwh').value.trim();
+  var name = document.getElementById('inName').value.trim();
+  var water = document.getElementById('inWater').value.trim();
+  var pNum = parseInt(plot, 10);
+  var fPlot = document.getElementById('fPlot'), fKwh = document.getElementById('fKwh'), fName = document.getElementById('fName');
+  fPlot.classList.toggle('bad', !(pNum >= 1 && pNum <= 214)); if (!(pNum >= 1 && pNum <= 214)) ok = false;
+  fKwh.classList.toggle('bad', !(parseFloat(kwh.replace(',', '.')) > 0)); if (!(parseFloat(kwh.replace(',', '.')) > 0)) ok = false;
+  fName.classList.toggle('bad', name.length < 3); if (name.length < 3) ok = false;
+  if (!ok) return;
+  var now = new Date();
+  var dateStr = now.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
+  try {
+    localStorage.setItem('sntnv-meter', JSON.stringify({ plot: plot, kwh: kwh, water: water, name: name, date: dateStr }));
+  } catch(e){}
+  form.reset();
+  showLast();
+  toast('Показания уч. ' + plot + ' приняты. Спасибо!');
+});
+
+/* ---------- accordions ---------- */
+document.querySelectorAll('[data-acc]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var item = btn.closest('.acc-item');
+    var panel = item.querySelector('.acc-panel');
+    var wasOpen = item.classList.contains('open');
+    var group = item.parentElement;
+    group.querySelectorAll('.acc-item.open').forEach(function(o){
+      if (o !== item){
+        o.classList.remove('open');
+        o.querySelector('.acc-panel').style.maxHeight = null;
+        o.querySelector('[data-acc]').setAttribute('aria-expanded', 'false');
+      }
+    });
+    item.classList.toggle('open', !wasOpen);
+    btn.setAttribute('aria-expanded', String(!wasOpen));
+    panel.style.maxHeight = !wasOpen ? panel.scrollHeight + 'px' : null;
+  });
+});
+
+/* ---------- docs download ---------- */
+document.querySelectorAll('[data-doc]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var name = btn.getAttribute('data-doc');
+    var content = 'СНТ «НОВОЕ ВЕЛЬЯМИНОВО»\r\n================================\r\n\r\nДокумент: ' + name + '\r\nДата выгрузки: ' + new Date().toLocaleDateString('ru-RU') + '\r\n\r\nЭто демонстрационная копия документа.\r\nОригинал в бумажном виде хранится в правлении (участок 1),\r\nприёмные часы — суббота с 10:00 до 14:00.\r\n';
+    var blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = name + '.txt';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 500);
+    toast('Файл сохранён в загрузки');
+  });
+});
+
+/* ---------- ics calendar ---------- */
+function pad(n){ return (n < 10 ? '0' : '') + n; }
+document.querySelectorAll('[data-ics]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var d = btn.getAttribute('data-date'), t = btn.getAttribute('data-time');
+    var hours = parseInt(btn.getAttribute('data-hours'), 10) || 1;
+    var hEnd = pad((parseInt(t.slice(0,2),10) + hours) % 24);
+    var stamp = d + 'T' + t;
+    var end = d + 'T' + hEnd + t.slice(2,8);
+    var ics = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//SNT Novoe Velyaminovo//RU','BEGIN:VEVENT',
+      'UID:' + Date.now() + '@snt-nv','DTSTAMP:' + stamp,'DTSTART:' + stamp,'DTEND:' + end,
+      'SUMMARY:' + btn.getAttribute('data-title'),'LOCATION:' + btn.getAttribute('data-loc'),
+      'END:VEVENT','END:VCALENDAR'].join('\r\n');
+    var blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = 'snt-novoe-velyaminovo.ics';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 500);
+    toast('Событие добавлено в календарь');
+  });
+});
+
+/* ---------- gallery counter ---------- */
+var gal = document.getElementById('gal');
+var galCount = document.getElementById('galCount');
+function updateGal(){
+  var figs = gal.querySelectorAll('figure');
+  var first = figs[0].getBoundingClientRect().left;
+  var idx = 0, best = Infinity;
+  figs.forEach(function(f, i){
+    var d = Math.abs(f.getBoundingClientRect().left - first);
+    if (d < best){ best = d; idx = i; }
+  });
+  galCount.textContent = (idx + 1) + ' / ' + figs.length;
+}
+gal.addEventListener('scroll', function(){ requestAnimationFrame(updateGal); }, { passive: true });
+
+/* ---------- scrollspy ---------- */
+var spyLinks = document.querySelectorAll('.bnav a');
+var spyMap = {};
+spyLinks.forEach(function(l){ spyMap[l.getAttribute('data-spy')] = l; });
+var spySections = ['top','novosti','platezhi','dokumenty','kontakty'].map(function(id){ return document.getElementById(id); });
+function onSpy(){
+  var pos = window.scrollY + window.innerHeight * .35;
+  var current = 'top';
+  spySections.forEach(function(s){ if (s && s.offsetTop <= pos) current = s.id; });
+  spyLinks.forEach(function(l){ l.classList.toggle('active', l.getAttribute('data-spy') === current); });
+}
+window.addEventListener('scroll', function(){ requestAnimationFrame(onSpy); }, { passive: true });
+onSpy();
+})();
+</script>
+</body>
+</html>

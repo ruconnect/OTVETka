@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ефремов → Москва — карта маршрута автобуса</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope@5/cyrillic-400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope@5/cyrillic-500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope@5/cyrillic-700.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope@5/cyrillic-800.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+<style>
+  :root{
+    --navy:#0b1c3d; --blue:#2563eb; --blue-d:#1d4ed8; --orange:#f97316;
+    --bg:#eef2f9; --card:#ffffff; --ink:#0f172a; --muted:#64748b; --line:#e5ebf6;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Manrope',system-ui,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+
+  /* ---------- HEADER ---------- */
+  header{
+    background:
+      radial-gradient(900px 300px at 85% -20%, rgba(59,130,246,.55), transparent 60%),
+      radial-gradient(600px 260px at 5% 120%, rgba(249,115,22,.35), transparent 60%),
+      linear-gradient(120deg,#081536,#12275c 55%,#173a8f);
+    color:#fff;padding:30px 34px 26px;
+    display:flex;flex-wrap:wrap;gap:24px;align-items:flex-end;justify-content:space-between;
+  }
+  .route-tag{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);padding:6px 12px;border-radius:99px;margin-bottom:14px}
+  .route-tag .dotline{width:34px;height:0;border-top:2px dashed rgba(255,255,255,.7)}
+  h1{font-size:clamp(26px,4vw,44px);font-weight:800;letter-spacing:-.02em;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  h1 .arrow{color:var(--orange);font-weight:800}
+  .sub{margin-top:8px;color:#c9d6f2;font-size:14px;max-width:560px}
+  .hero-stats{display:flex;gap:12px;flex-wrap:wrap}
+  .chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(6px);border-radius:14px;padding:12px 16px;min-width:118px}
+  .chip b{display:block;font-size:20px;font-weight:800}
+  .chip span{font-size:12px;color:#c9d6f2}
+
+  /* ---------- LAYOUT ---------- */
+  main{max-width:1340px;margin:0 auto;padding:24px;display:grid;grid-template-columns:390px 1fr;gap:22px;align-items:start}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 28px rgba(15,23,42,.06);padding:18px}
+  .card h2{font-size:15px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .card h2 .tick{width:8px;height:8px;border-radius:50%;background:var(--orange)}
+
+  /* ---------- CONTROLS ---------- */
+  .controls-row{display:flex;gap:10px;margin-bottom:14px}
+  button{font-family:inherit;font-weight:700;font-size:14px;border:none;border-radius:12px;padding:11px 16px;cursor:pointer;transition:.2s}
+  #playBtn{flex:1;background:linear-gradient(120deg,var(--orange),#fb923c);color:#fff;box-shadow:0 6px 16px rgba(249,115,22,.35)}
+  #playBtn:hover{transform:translateY(-1px)}
+  #resetBtn{background:#f1f5fe;color:var(--blue-d);border:1px solid #dbe6fb}
+  #resetBtn:hover{background:#e4edfd}
+
+  input[type=range]{width:100%;appearance:none;height:8px;border-radius:99px;background:linear-gradient(to right,var(--blue) 0%,var(--blue) var(--fill,0%),#e2e8f4 var(--fill,0%),#e2e8f4 100%);outline:none;margin:6px 0 12px;cursor:pointer}
+  input[type=range]::-webkit-slider-thumb{appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:6px solid var(--blue);box-shadow:0 2px 8px rgba(37,99,235,.4);cursor:grab}
+  input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:6px solid var(--blue);box-shadow:0 2px 8px rgba(37,99,235,.4);cursor:grab}
+
+  .readout{display:flex;justify-content:space-between;align-items:center;background:#f4f7fe;border-radius:12px;padding:12px 14px;font-size:13px;color:var(--muted)}
+  .readout b{color:var(--ink);font-size:15px}
+  .readout .km b{color:var(--blue-d)}
+
+  /* ---------- STOPS LIST ---------- */
+  .stops-list{max-height:372px;overflow-y:auto;padding-right:4px}
+  .stops-list::-webkit-scrollbar{width:6px}
+  .stops-list::-webkit-scrollbar-thumb{background:#cbd8f0;border-radius:99px}
+  .stop-row{display:flex;gap:12px;align-items:center;padding:10px 12px;border-radius:12px;cursor:pointer;transition:.18s;border:1px solid transparent;position:relative}
+  .stop-row:hover{background:#f2f6ff}
+  .stop-row.active{background:#e9f0ff;border-color:#c7d9fb}
+  .stop-row.active::before{content:"";position:absolute;left:-1px;top:9px;bottom:9px;width:3px;border-radius:3px;background:var(--orange)}
+  .stop-row.passed .num{background:#e2e8f0;color:#94a3b8}
+  .num{flex:0 0 28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(37,99,235,.35)}
+  .stop-row:first-child .num{background:#16a34a}
+  .stop-row:last-child .num{background:#dc2626}
+  .stop-row.passed .num::after{content:""}
+  .s-info{flex:1;min-width:0}
+  .s-name{font-weight:700;font-size:14px}
+  .s-meta{font-size:12px;color:var(--muted);margin-top:1px}
+  .s-km{font-size:12px;font-weight:700;color:var(--blue-d);background:#eaf1ff;border-radius:8px;padding:4px 8px;white-space:nowrap}
+  .here{position:absolute;right:12px;top:-7px;background:var(--orange);color:#fff;font-size:10px;font-weight:800;padding:2px 7px;border-radius:99px;display:none}
+  .stop-row.active .here{display:block}
+
+  /* ---------- INFO CARD ---------- */
+  .info-row{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;padding:9px 0;border-bottom:1px dashed var(--line)}
+  .info-row:last-child{border-bottom:none}
+  .info-row span{color:var(--muted)}
+  .info-row b{text-align:right;font-weight:700}
+  .note{margin-top:12px;font-size:11.5px;color:#94a3b8;line-height:1.5}
+
+  /* ---------- MAP ---------- */
+  .map-wrap{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);box-shadow:0 12px 32px rgba(15,23,42,.09);height:clamp(500px,calc(100vh - 220px),820px)}
+  #map{position:absolute;inset:0;z-index:1;font-family:'Manrope',sans-serif}
+  .legend{position:absolute;left:14px;bottom:14px;z-index:1000;background:rgba(255,255,255,.95);backdrop-filter:blur(4px);border-radius:14px;padding:12px 16px;box-shadow:0 6px 20px rgba(15,23,42,.16);font-size:12.5px;display:flex;flex-direction:column;gap:8px}
+  .legend .li{display:flex;align-items:center;gap:10px}
+  .legend .swatch{width:26px;height:0;border-top:4px solid var(--blue);border-radius:4px}
+  .legend .pt{width:12px;height:12px;border-radius:50%;background:var(--blue);border:2px solid #fff;box-shadow:0 0 0 1px var(--blue)}
+  .legend .pt.g{background:#16a34a;box-shadow:0 0 0 1px #16a34a}
+  .legend .pt.r{background:#dc2626;box-shadow:0 0 0 1px #dc2626}
+
+  /* leaflet custom */
+  .custom-div-icon{background:transparent;border:none}
+  .stop-dot{width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font:800 13px/28px 'Manrope',sans-serif;text-align:center;border:3px solid #fff;box-shadow:0 2px 8px rgba(15,23,42,.35)}
+  .stop-dot.start{background:#16a34a;width:34px;height:34px;line-height:32px;font-size:15px}
+  .stop-dot.finish{background:#dc2626;width:34px;height:34px;line-height:32px;font-size:15px}
+  .bus-rotor{width:38px;height:38px;transition:transform .25s linear}
+  .bus-dot{width:38px;height:38px;border-radius:50%;background:#fff;border:3px solid var(--orange);display:flex;align-items:center;justify-content:center;font-size:19px;box-shadow:0 4px 12px rgba(249,115,22,.5)}
+  .km-tick{background:#0f172a;color:#fff;font:700 10px/16px 'Manrope',sans-serif;padding:1px 7px;border-radius:99px;white-space:nowrap;opacity:.85;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+  .route-dash{stroke-dasharray:14 10;animation:dashflow 1.1s linear infinite}
+  @keyframes dashflow{to{stroke-dashoffset:-24}}
+  .leaflet-tooltip.stop-label{background:#0f172a;color:#fff;border:none;border-radius:8px;padding:4px 10px;font:800 12.5px 'Manrope',sans-serif;box-shadow:0 4px 12px rgba(15,23,42,.3)}
+  .leaflet-tooltip.stop-label:before{border-top-color:#0f172a}
+  .leaflet-container{font-family:'Manrope',sans-serif}
+  .leaflet-popup-content-wrapper{border-radius:12px;font-family:'Manrope',sans-serif}
+  .leaflet-popup-content{font-size:13px;line-height:1.55}
+
+  footer{max-width:1340px;margin:0 auto;padding:0 24px 26px;color:#94a3b8;font-size:12px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+  @media (max-width:1020px){
+    main{grid-template-columns:1fr}
+    .map-wrap{height:460px}
+    header{padding:24px 20px}
+    main{padding:16px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="route-tag">🚌 Междугородний автобус <span class="dotline"></span> Тульская область → Москва</div>
+    <h1>Ефремов <span class="arrow">⟶</span> Москва</h1>
+    <p class="sub">Интерактивная карта маршрута следования автобуса по трассам М-4 «Дон» и М-2 «Крым». Нажмите «В путь», чтобы проехать весь маршрут вместе с автобусом.</p>
+  </div>
+  <div class="hero-stats">
+    <div class="chip"><b>352 км</b><span>протяжённость</span></div>
+    <div class="chip"><b>5 ч 15 мин</b><span>время в пути</span></div>
+    <div class="chip"><b>7</b><span>остановок</span></div>
+    <div class="chip"><b>07:00</b><span>отправление</span></div>
+  </div>
+</header>
+
+<main>
+  <aside style="display:flex;flex-direction:column;gap:20px">
+
+    <div class="card">
+      <h2><span class="tick"></span>Движение по маршруту</h2>
+      <div class="controls-row">
+        <button id="playBtn">▶&nbsp; В путь</button>
+        <button id="resetBtn">⟲ Сначала</button>
+      </div>
+      <input type="range" id="slider" min="0" max="1000" value="0">
+      <div class="readout">
+        <div class="km">Пройдено: <b><span id="curKm">0</span> км</b> из 352</div>
+        <div>Время: <b id="curTime">07:00</b></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="tick"></span>Остановки маршрута</h2>
+      <div class="stops-list" id="stopsList"></div>
+    </div>
+
+    <div class="card">
+      <h2><span class="tick"></span>Информация о рейсе</h2>
+      <div class="info-row"><span>Отправление</span><b>Ефремов, автовокзал</b></div>
+      <div class="info-row"><span>Прибытие</span><b>Москва, автостанция «Саларьево»</b></div>
+      <div class="info-row"><span>Рейсы</span><b>ежедневно, 07:00 и 13:30</b></div>
+      <div class="info-row"><span>Стоимость</span><b>от 900 ₽</b></div>
+      <div class="info-row"><span>Багаж</span><b>включён до 20 кг</b></div>
+      <p class="note">* Схема носит ознакомительный характер. Актуальное расписание и стоимость билетов уточняйте в кассах автовокзала г. Ефремов.</p>
+    </div>
+
+  </aside>
+
+  <section class="map-wrap">
+    <div id="map"></div>
+    <div class="legend">
+      <div class="li"><span class="swatch"></span>Трасса следования</div>
+      <div class="li"><span class="pt g"></span>Начало маршрута</div>
+      <div class="li"><span class="pt"></span>Остановка</div>
+      <div class="li"><span class="pt r"></span>Москва (конечная)</div>
+      <div class="li"><span style="font-size:16px">🚌</span>Текущее положение автобуса</div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>Карта маршрута «Ефремов — Москва» · интерактивная схема</span>
+  <span>Данные о времени и расстояниях приближённые</span>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* ================= ДАННЫЕ ================= */
+const stopsData = [
+  {name:"Ефремов",    desc:"Автовокзал, ул. Свердлова", lat:53.1497, lng:38.0921, km:0,   time:"07:00"},
+  {name:"Богородицк", desc:"Остановка «Автовокзал»",     lat:53.7717, lng:38.1286, km:71,  time:"08:00"},
+  {name:"Тула",       desc:"Автовокзал, пр. Ленина",     lat:54.1931, lng:37.6173, km:136, time:"09:05"},
+  {name:"Серпухов",   desc:"Выезд на М-4 «Дон»",         lat:54.9167, lng:37.4167, km:241, time:"10:35"},
+  {name:"Чехов",      desc:"Автостанция «Чехов»",        lat:55.1450, lng:37.4550, km:271, time:"11:02"},
+  {name:"Подольск",   desc:"Автовокзал, ул. Плещеевская",lat:55.4247, lng:37.5547, km:316, time:"11:42"},
+  {name:"Москва",     desc:"Автостанция «Саларьево»",    lat:55.6220, lng:37.4460, km:352, time:"12:15"}
+];
+stopsData.forEach(s=>{ const [h,m]=s.time.split(":"); s.min=(+h)*60+(+m); });
+
+const routeCoords = [
+  [53.1497,38.0921],[53.33,38.15],[53.55,38.14],[53.7717,38.1286],
+  [53.95,37.96],[54.10,37.78],[54.1931,37.6173],
+  [54.35,37.52],[54.55,37.48],[54.75,37.42],[54.9167,37.4167],
+  [55.05,37.43],[55.145,37.455],[55.28,37.50],[55.4247,37.5547],
+  [55.52,37.53],[55.605,37.50],[55.622,37.446]
+];
+
+const TOTAL_KM = 352;
+const ROUTE_DURATION_MS = 48000; // полная поездка в анимации
+
+/* ============== ГЕОМЕТРИЯ МАРШРУТА ============== */
+function hav(a,b){
+  const R=6371, dLa=(b[0]-a[0])*Math.PI/180, dLo=(b[1]-a[1])*Math.PI/180;
+  const la1=a[0]*Math.PI/180, la2=b[0]*Math.PI/180;
+  const h=Math.sin(dLa/2)**2+Math.cos(la1)*Math.cos(la2)*Math.sin(dLo/2)**2;
+  return 2*R*Math.asin(Math.sqrt(h));
+}
+const cum=[0];
+for(let i=1;i<routeCoords.length;i++) cum.push(cum[i-1]+hav(routeCoords[i-1],routeCoords[i]));
+const routeLen = cum[cum.length-1];
+
+function pointAt(p){
+  const target = Math.max(0,Math.min(1,p))*routeLen;
+  let i=1;
+  while(i<cum.length && cum[i]<target) i++;
+  if(i>=cum.length) return routeCoords[routeCoords.length-1];
+  const segLen = cum[i]-cum[i-1];
+  const f = segLen ? (target-cum[i-1])/segLen : 0;
+  const a=routeCoords[i-1], b=routeCoords[i];
+  return [a[0]+(b[0]-a[0])*f, a[1]+(b[1]-a[1])*f];
+}
+function bearing(a,b){
+  const f1=a[0]*Math.PI/180, f2=b[0]*Math.PI/180, dl=(b[1]-a[1])*Math.PI/180;
+  const y=Math.sin(dl)*Math.cos(f2);
+  const x=Math.cos(f1)*Math.sin(f2)-Math.sin(f1)*Math.cos(f2)*Math.cos(dl);
+  return (Math.atan2(y,x)*180/Math.PI+360)%360;
+}
+function timeAtKm(km){
+  if(km<=0) return stopsData[0].time;
+  if(km>=TOTAL_KM) return stopsData[stopsData.length-1].time;
+  let i=0;
+  while(i<stopsData.length-1 && stopsData[i+1].km<km) i++;
+  const a=stopsData[i], b=stopsData[i+1];
+  const f=(km-a.km)/((b.km-a.km)||1);
+  const t=Math.round(a.min+(b.min-a.min)*f);
+  return String(Math.floor(t/60)).padStart(2,"0")+":"+String(t%60).padStart(2,"0");
+}
+
+/* ================= КАРТА ================= */
+const map = L.map('map',{zoomControl:false, minZoom:6, maxZoom:15});
+L.control.zoom({position:'topright'}).addTo(map);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
+  attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
+  subdomains:'abcd'
+}).addTo(map);
+
+/* линия маршрута: свечение + подложка + анимированный пунктир */
+L.polyline(routeCoords,{color:'#2563eb',weight:14,opacity:.12}).addTo(map);
+L.polyline(routeCoords,{color:'#ffffff',weight:9,opacity:.95}).addTo(map);
+const mainLine = L.polyline(routeCoords,{color:'#2563eb',weight:5,opacity:.95,className:'route-dash'}).addTo(map);
+map.fitBounds(mainLine.getBounds().pad(0.14));
+
+/* километровые отметки */
+[50,100,150,200,250,300].forEach(k=>{
+  const pos = pointAt(k/TOTAL_KM);
+  L.marker(pos,{icon:L.divIcon({className:'custom-div-icon',html:`<div class="km-tick">${k} км</div>`,iconSize:[46,18],iconAnchor:[23,9]}),interactive:false}).addTo(map);
+});
+
+/* маркеры остановок */
+const stopMarkers=[];
+stopsData.forEach((s,i)=>{
+  const cls = i===0 ? 'start' : (i===stopsData.length-1 ? 'finish' : '');
+  const marker = L.marker([s.lat,s.lng],{
+    icon:L.divIcon({className:'custom-div-icon',html:`<div class="stop-dot ${cls}">${i+1}</div>`,iconSize:[cls?34:28,cls?34:28],iconAnchor:[cls?17:14,cls?17:14]}),
+    riseOnHover:true
+  }).addTo(map);
+  marker.bindPopup(`<b>${s.name}</b><br>${s.desc}<br>🕒 ${s.time} &nbsp;·&nbsp; 📍 ${s.km} км от Ефремова`);
+  if(i===0 || i===stopsData.length-1){
+    marker.bindTooltip(s.name,{permanent:true,direction:'top',offset:[0,-16],className:'stop-label'});
+  } else {
+    marker.bindTooltip(`${s.name} · ${s.time}`,{direction:'top',offset:[0,-14]});
+  }
+  marker.on('click',()=>{ goToStop(i); });
+  stopMarkers.push(marker);
+});
+
+/* автобус */
+const busMarker = L.marker(routeCoords[0],{
+  icon:L.divIcon({className:'custom-div-icon',html:`<div class="bus-rotor" id="busRotor"><div class="bus-dot">🚌</div></div>`,iconSize:[38,38],iconAnchor:[19,19]}),
+  zIndexOffset:1000
+}).addTo(map);
+busMarker.bindTooltip("Автобус Ефремов → Москва",{direction:'top',offset:[0,-20]});
+const busRotor = document.getElementById('busRotor');
+
+/* ================= СПИСОК ОСТАНОВОК ================= */
+const stopsListEl = document.getElementById('stopsList');
+const rows=[];
+stopsData.forEach((s,i)=>{
+  const row=document.createElement('div');
+  row.className='stop-row';
+  row.innerHTML=`
+    <div class="num">${i+1}</div>
+    <div class="s-info">
+      <div class="s-name">${s.name}</div>
+      <div class="s-meta">${s.desc} · ${s.time}</div>
+    </div>
+    <div class="s-km">${s.km} км</div>
+    <div class="here">вы здесь</div>`;
+  row.addEventListener('click',()=>goToStop(i));
+  stopsListEl.appendChild(row);
+  rows.push(row);
+});
+function goToStop(i){
+  const s=stopsData[i];
+  progress = s.km/TOTAL_KM;
+  update();
+  map.flyTo([s.lat,s.lng],11,{duration:.9});
+  stopMarkers[i].openPopup();
+}
+
+/* ================= АНИМАЦИЯ ================= */
+let progress=0, playing=false, prevTs=null, rafId=null;
+const slider=document.getElementById('slider');
+const playBtn=document.getElementById('playBtn');
+const resetBtn=document.getElementById('resetBtn');
+const curKmEl=document.getElementById('curKm');
+const curTimeEl=document.getElementById('curTime');
+
+function update(){
+  const km=progress*TOTAL_KM;
+  const pos=pointAt(progress);
+  busMarker.setLatLng(pos);
+  const ahead=pointAt(Math.min(1,progress+0.004));
+  busRotor.style.transform=`rotate(${bearing(pos,ahead)+90}deg)`;
+  slider.value=Math.round(progress*1000);
+  slider.style.setProperty('--fill',(progress*100)+'%');
+  curKmEl.textContent=Math.round(km);
+  curTimeEl.textContent=timeAtKm(km);
+  let activeIdx=0;
+  stopsData.forEach((s,i)=>{ if(km>=s.km-0.001) activeIdx=i; });
+  rows.forEach((r,i)=>{
+    r.classList.toggle('active', i===activeIdx && progress>0.001 && progress<0.999);
+    r.classList.toggle('passed', i<activeIdx);
+  });
+}
+
+function frame(ts){
+  if(!playing){ prevTs=null; return; }
+  if(prevTs===null) prevTs=ts;
+  const dt=ts-prevTs; prevTs=ts;
+  progress+=dt/ROUTE_DURATION_MS;
+  if(progress>=1){ progress=1; update(); setPlaying(false); return; }
+  update();
+  rafId=requestAnimationFrame(frame);
+}
+function setPlaying(state){
+  playing=state; prevTs=null;
+  playBtn.innerHTML = state ? '⏸&nbsp; Пауза' : (progress>=1 ? '▶&nbsp; Ещё раз' : '▶&nbsp; В путь');
+  if(state){ rafId=requestAnimationFrame(frame); }
+}
+playBtn.addEventListener('click',()=>{
+  if(!playing && progress>=1) progress=0;
+  setPlaying(!playing);
+  update();
+});
+resetBtn.addEventListener('click',()=>{ setPlaying(false); progress=0; update(); });
+slider.addEventListener('input',()=>{ progress=slider.value/1000; update(); });
+
+update();
+</script>
+</body>
+</html>
